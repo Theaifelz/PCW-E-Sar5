@@ -178,7 +178,7 @@
         // =========================================================================
         // 📌 [ตำแหน่งที่ 1] ลิงก์สำหรับผูก Google Sheets Web API
         // =========================================================================
-        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec";
+        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec";
 
         let activeStandardId = 1;
         let activeDocumentName = "";
@@ -226,7 +226,7 @@
         let sarData = JSON.parse(JSON.stringify(defaultSarData));
 
         async function fetchSheetData() {
-            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
+            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec")) {
                 console.log("ℹ️ ยังไม่ได้ใส่ GOOGLE_SHEET_API_URL ระบบจะใช้ข้อมูลเริ่มต้น/Local Cache");
                 return;
             }
