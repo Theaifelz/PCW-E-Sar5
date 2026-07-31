@@ -27,568 +27,15 @@
         .block-theme-dark { background: #1e2e22; border-color: #059669; color: #ecfdf5; }
     </style>
     <script>
-        function showLogoFallback() {
-            const logoImg = document.getElementById("logo-image-display");
-            const logoFallback = document.getElementById("logo-icon-fallback");
-            if (logoImg && logoFallback) {
-                logoImg.classList.add("hidden");
-                logoFallback.classList.remove("hidden");
+        function convertDriveImageUrl(url) {
+            if (!url || typeof url !== 'string') return '';
+            url = url.trim();
+            if (!url) return '';
+            const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+            if (match && match[1] && (url.includes('drive.google.com') || url.includes('docs.google.com'))) {
+                return 'https://lh3.googleusercontent.com/d/' + match[1];
             }
-        }
-    </script>
-</head>
-<body class="bg-[#fcfcf9] text-[#1e2e22] min-h-screen flex flex-col justify-between">
-
-    <!-- Custom Toast Notification Container -->
-    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-        <div class="bg-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3">
-            <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-            <span id="toast-message" class="text-xs md:text-sm font-bold">ข้อความแจ้งเตือน</span>
-        </div>
-    </div>
-
-    <!-- Custom Delete Confirmation Modal -->
-    <div id="confirm-delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all">
-        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden border-2 border-white sticker-card p-6 text-center space-y-4">
-            <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center text-3xl mx-auto border border-rose-100">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div>
-                <h3 id="confirm-modal-title" class="font-extrabold text-slate-800 text-base">ยืนยันการลบข้อมูล</h3>
-                <p id="confirm-modal-body" class="text-xs text-slate-500 font-medium mt-1">คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?</p>
-            </div>
-            <div class="flex gap-2 pt-2">
-                <button onclick="closeConfirmModal()" class="flex-1 py-2.5 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-200">ยกเลิก</button>
-                <button id="btn-confirm-action" class="flex-1 py-2.5 bg-rose-500 text-white rounded-xl text-xs font-bold hover:bg-rose-600 shadow-md">ยืนยันลบ</button>
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <!-- แถบด้านบนสุดชี้แจงโหมดและปุ่มสลับการทำงาน -->
-        <div class="sticky top-0 z-40 bg-gradient-to-r from-[#1e2e22] to-slate-900 text-white py-3 px-4 shadow-xl border-b border-emerald-500/30">
-            <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-                <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-[#84cc16] animate-ping"></span>
-                    <span class="text-xs font-extrabold tracking-wider uppercase text-lime-200">ระบบประกันคุณภาพดิจิทัล สมศ. รอบห้า (แผงควบคุมหลังบ้าน)</span>
-                </div>
-                <!-- ปุ่มสลับโหมด -->
-                <div class="bg-slate-800/80 p-1.5 rounded-2xl border border-slate-700/80 flex text-xs font-bold shadow-inner">
-                    <button id="mode-btn-admin" class="px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 bg-[#0d9488] text-white">
-                        <i class="fa-solid fa-gears"></i> โหมดแอดมิน (หลังบ้าน)
-                    </button>
-                    <a href="index.html" class="px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 text-slate-400 hover:text-white">
-                        <i class="fa-solid fa-eye"></i> โหมดผู้ประเมิน (หน้าแรก)
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- 1. ส่วนหัวของเว็บไซต์ -->
-        <header class="bg-gradient-to-r from-[#ecfccb] via-[#fef9c3] to-[#ccfbf1] border-b-4 border-white py-12 px-4 text-center relative overflow-hidden">
-            <div class="max-w-3xl mx-auto relative z-10">
-                <div id="header-badge-icon" class="w-24 h-24 mx-auto bg-white rounded-full sticker-card flex items-center justify-center mb-4 transition-transform hover:rotate-6 duration-300 overflow-hidden p-1">
-                    <img id="logo-image-display" src="" class="w-full h-full object-contain rounded-full hidden" onerror="showLogoFallback()">
-                    <div id="logo-icon-fallback" class="flex items-center justify-center w-full h-full">
-                        <i class="fa-solid fa-graduation-cap text-4xl text-[#0d9488]"></i>
-                    </div>
-                </div>
-                
-                <h1 id="header-title-display" class="text-2xl md:text-3xl font-extrabold text-[#1e2e22] tracking-wide mb-2">
-                    ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)
-                </h1>
-                <p id="header-subtitle-display" class="text-xs md:text-sm text-emerald-800 font-bold mb-4">
-                    ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล
-                </p>
-
-                <div class="inline-block relative">
-                    <div class="bg-white/95 px-6 py-2.5 rounded-full border-2 border-[#d9f99d] shadow-sm font-extrabold text-[#0d9488] text-sm md:text-base flex items-center gap-2 sticker-btn">
-                        <span>🏫 <span id="school-name-text">โรงเรียนปากชมวิทยา</span></span>
-                    </div>
-                </div>
-            </div>
-        </header>
-
-        <!-- 2. แผงวิเคราะห์ความพร้อมระบบเอกสารเชิงประจักษ์ (เกจความก้าวหน้า) -->
-        <div id="progress-dashboard-container" class="max-w-4xl mx-auto px-4 mt-8">
-            <div class="bg-white border-2 border-white p-6 rounded-3xl sticker-card bg-gradient-to-br from-white to-[#f7fcf6]">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-6">
-                    <div>
-                        <h2 class="font-bold text-[#1e2e22] text-base md:text-lg flex items-center gap-2">
-                            <i class="fa-solid fa-gauge-high text-[#0d9488]"></i> แผงวิเคราะห์ความเรียบร้อยคลังสารสนเทศ (Real-time Gauge Audit)
-                        </h2>
-                        <p class="text-xs text-slate-400 mt-1">เกจวิเคราะห์คุณภาพแบบหน้าปัดครึ่งวงกลม คำนวณความพร้อมสดจากคลังเอกสาร</p>
-                    </div>
-                    <div id="overall-status-badge" class="px-4 py-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full border border-emerald-100 flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-[#84cc16] animate-ping"></span>
-                        <span id="overall-status-text">กำลังคำนวณเกจ...</span>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    
-                    <div class="md:col-span-5 flex flex-col items-center justify-center p-4 bg-[#fcfcf9] rounded-2xl border border-lime-100 relative">
-                        <p class="text-xs font-bold text-emerald-800 mb-2 uppercase tracking-wider text-center">สัดส่วนความพร้อมรวมทุกมาตรฐาน</p>
-                        
-                        <div class="relative w-full max-w-[210px]">
-                            <svg viewBox="0 0 100 55" class="w-full h-auto overflow-visible">
-                                <defs>
-                                    <linearGradient id="main-gauge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#84cc16" />
-                                        <stop offset="50%" stop-color="#eab308" />
-                                        <stop offset="100%" stop-color="#0d9488" />
-                                    </linearGradient>
-                                </defs>
-                                <path d="M 10 48 A 40 40 0 0 1 90 48" fill="none" stroke="#e2e8f0" stroke-width="8" stroke-linecap="round"/>
-                                <path id="total-gauge-arc" d="M 10 48 A 40 40 0 0 1 90 48" fill="none" stroke="url(#main-gauge-gradient)" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66" style="transition: stroke-dashoffset 0.8s ease-out;"/>
-                                <text x="50" y="38" text-anchor="middle" font-weight="900" font-size="16" fill="#1e2e22" id="progress-total-percentage">0%</text>
-                                <text x="50" y="50" text-anchor="middle" font-weight="700" font-size="6" fill="#64748b">ความพร้อมทั้งหมด</text>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div class="md:col-span-7 grid grid-cols-3 gap-3">
-                        <div class="flex flex-col items-center justify-between p-3 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                            <div class="w-full relative">
-                                <svg viewBox="0 0 100 55" class="w-full h-auto overflow-visible">
-                                    <path d="M 10 48 A 40 40 0 0 1 90 48" fill="none" stroke="#f1f5f9" stroke-width="8" stroke-linecap="round"/>
-                                    <path id="m1-gauge-arc" d="M 10 48 A 40 40 0 0 1 90 48" fill="none" stroke="#84cc16" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66" style="transition: stroke-dashoffset 0.8s ease-out;"/>
-                                    <text x="50" y="40" text-anchor="middle" font-weight="800" font-size="15" fill="#4d7c0f" id="progress-m1-text">0%</text>
-                                </svg>
-                            </div>
-                            <p class="text-[10px] font-bold text-slate-500 mt-1 text-center leading-tight">มาตรฐานที่ 1<br><span class="text-[8px] text-slate-400 font-medium">คุณภาพผู้เรียน</span></p>
-                        </div>
-
-                        <div class="flex flex-col items-center justify-between p-3 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                            <div class="w-full relative">
-                                <svg viewBox="0 0 100 55" class="w-full h-auto overflow-visible">
-                                    <path d="M 10 48 A 40 40 0 0 1 90 48" fill="none" stroke="#f1f5f9" stroke-width="8" stroke-linecap="round"/>
-                                    <path id="m2-gauge-arc" d="M 10 48 A 40 40 0 0 1 90 48" fill="none" stroke="#eab308" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66" style="transition: stroke-dashoffset 0.8s ease-out;"/>
-                                    <text x="50" y="40" text-anchor="middle" font-weight="800" font-size="15" fill="#a16207" id="progress-m2-text">0%</text>
-                                </svg>
-                            </div>
-                            <p class="text-[10px] font-bold text-slate-500 mt-1 text-center leading-tight">มาตรฐานที่ 2<br><span class="text-[8px] text-slate-400 font-medium">การบริหารจัดการ</span></p>
-                        </div>
-
-                        <div class="flex flex-col items-center justify-between p-3 bg-white rounded-2xl border border-slate-100 shadow-sm">
-                            <div class="w-full relative">
-                                <svg viewBox="0 0 100 55" class="w-full h-auto overflow-visible">
-                                    <path d="M 10 48 A 40 40 0 0 1 90 48" fill="none" stroke="#f1f5f9" stroke-width="8" stroke-linecap="round"/>
-                                    <path id="m3-gauge-arc" d="M 10 48 A 40 40 0 0 1 90 48" fill="none" stroke="#0d9488" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="125.66" style="transition: stroke-dashoffset 0.8s ease-out;"/>
-                                    <text x="50" y="40" text-anchor="middle" font-weight="800" font-size="15" fill="#0f766e" id="progress-m3-text">0%</text>
-                                </svg>
-                            </div>
-                            <p class="text-[10px] font-bold text-slate-500 mt-1 text-center leading-tight">มาตรฐานที่ 3<br><span class="text-[8px] text-slate-400 font-medium">การจัดประสบการณ์</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. พื้นที่หลักสำหรับการแสดงผลและสลับแท็บเมนู -->
-        <main class="max-w-4xl mx-auto px-4 py-8">
-            
-            <div id="tabs-navigation-container" class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 border-b border-slate-200/60 pb-6">
-                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn px-4 md:px-5 py-3 rounded-2xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#0d9488] text-white sticker-btn scale-105">
-                    <i class="fa-solid fa-star mr-1.5"></i>มาตรฐานที่ 1
-                </button>
-                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn px-4 md:px-5 py-3 rounded-2xl text-xs md:text-sm font-bold transition-all duration-300 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200">
-                    <i class="fa-solid fa-folder-open mr-1.5"></i>มาตรฐานที่ 2
-                </button>
-                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn px-4 md:px-5 py-3 rounded-2xl text-xs md:text-sm font-bold transition-all duration-300 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200">
-                    <i class="fa-solid fa-chalkboard-user mr-1.5"></i>มาตรฐานที่ 3
-                </button>
-                <button onclick="switchTab(4)" id="tab-btn-4" class="tab-btn px-4 md:px-5 py-3 rounded-2xl text-xs md:text-sm font-bold transition-all duration-300 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200">
-                    <i class="fa-solid fa-wand-magic-sparkles text-amber-500 mr-1.5"></i>🛠 *ตกแต่งหน้าแรก (Google Sites Builder)*
-                </button>
-            </div>
-
-            <div id="standards-container" class="space-y-4">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-extrabold text-slate-800 text-sm md:text-base flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-[#0d9488]"></i> รายการประเด็นพิจารณาและหลักฐานเชิงประจักษ์
-                    </h3>
-                    <button onclick="openAddTopicModal()" class="px-4 py-2 bg-[#0d9488] hover:bg-[#0f766e] text-white text-xs font-bold rounded-xl transition-all shadow-sm">
-                        <i class="fa-solid fa-circle-plus mr-1"></i> เพิ่มประเด็นพิจารณาใหม่
-                    </button>
-                </div>
-                <div id="accordion-container" class="space-y-4"></div>
-            </div>
-
-            <div id="builder-container" class="hidden space-y-6">
-                <div class="bg-white border-2 border-white p-6 rounded-3xl sticker-card space-y-4">
-                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                        <h3 class="font-extrabold text-slate-800 text-sm md:text-base flex items-center gap-2">
-                            <i class="fa-solid fa-heading text-[#0d9488]"></i> ตั้งค่าข้อมูลและส่วนหัวของเว็บไซต์
-                        </h3>
-                        <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-3 py-1 rounded-full border border-emerald-200">
-                            <i class="fa-solid fa-arrows-rotate mr-1"></i> อัปเดต Real-time
-                        </span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-1">ชื่อโรงเรียน</label>
-                            <input type="text" id="builder-school-name" oninput="liveUpdateHeader()" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold text-slate-800" placeholder="เช่น โรงเรียนปากชมวิทยา">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-1">ลิงก์รูปภาพโลโก้โรงเรียน (รองรับ Google Drive)</label>
-                            <input type="text" id="builder-school-logo" oninput="liveUpdateHeader()" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-medium text-slate-800" placeholder="วางลิงก์รูปภาพโลโก้">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-1">หัวข้อหลักของเว็บ</label>
-                            <input type="text" id="builder-header-title" oninput="liveUpdateHeader()" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold text-slate-800" placeholder="เช่น ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-1">คำโปรยอธิบายใต้หัวข้อ</label>
-                            <input type="text" id="builder-header-subtitle" oninput="liveUpdateHeader()" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500/20 font-bold text-slate-800" placeholder="เช่น ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล">
-                        </div>
-                    </div>
-
-                    <div class="pt-3 text-right flex justify-end gap-2">
-                        <button onclick="saveHeaderSettings()" class="bg-[#0d9488] hover:bg-[#0f766e] text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5">
-                            <i class="fa-solid fa-floppy-disk text-sm"></i> บันทึกส่วนหัวลง Google Sheets
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-white border-2 border-white p-6 rounded-3xl sticker-card space-y-4">
-                    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                        <div>
-                            <h3 class="font-extrabold text-slate-800 text-sm md:text-base flex items-center gap-2">
-                                <i class="fa-solid fa-layer-group text-amber-500"></i> สร้างกล่องข้อความต้อนรับและสารสนเทศ (Google Sites Style)
-                            </h3>
-                            <p class="text-xs text-slate-400 mt-1">สามารถสร้างบล็อกข้อความต้อนรับ รูปภาพ และวิดีโอ VTR หลายเฉดสีเพื่อแสดงบนหน้าแรก</p>
-                        </div>
-                        <button onclick="openAddBlockModal()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-plus"></i> เพิ่มบล็อกใหม่
-                        </button>
-                    </div>
-
-                    <div id="welcome-blocks-list" class="space-y-3"></div>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
-    <!-- MODAL EDIT/ADD WELCOME BLOCK -->
-    <div id="welcome-block-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm transition-all">
-        <div class="bg-white rounded-3xl w-full max-w-xl overflow-hidden border-2 border-white sticker-card shadow-2xl">
-            <div class="bg-gradient-to-r from-amber-500 to-amber-600 p-5 text-white flex justify-between items-center">
-                <h3 id="block-modal-title" class="font-bold text-base md:text-lg"><i class="fa-solid fa-pen-to-square mr-2"></i>จัดการบล็อกข้อความต้อนรับ</h3>
-                <button onclick="closeBlockModal()" class="text-white/80 hover:text-white transition-colors text-lg"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
-                <input type="hidden" id="edit-block-id">
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">รูปแบบสื่อ/เนื้อหา</label>
-                        <select id="block-type" onchange="toggleBlockFields()" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl font-bold text-slate-800 focus:outline-none">
-                            <option value="text">💬 ข้อความ/สารต้อนรับ</option>
-                            <option value="image">🖼️ ข้อความ + รูปภาพ / อินโฟกราฟิก</option>
-                            <option value="vtr">🎬 วิดีโอ VTR นำเสนอ</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">ธีมสีพาสเทล (10 เฉดสี)</label>
-                        <select id="block-style" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl font-bold text-slate-800 focus:outline-none">
-                            <option value="lime">🟢 Soft Lime (เขียวมะนาว)</option>
-                            <option value="gold">🟡 Honey Gold (สีทอง)</option>
-                            <option value="teal">🔵 Mint Teal (มินต์เทอร์ควอยซ์)</option>
-                            <option value="lavender">🟣 Lavender (ม่วงลาเวนเดอร์)</option>
-                            <option value="rose">🌸 Blush Rose (ชมพูกุหลาบ)</option>
-                            <option value="ocean">🌊 Sky Ocean (ฟ้ามหาสมุทร)</option>
-                            <option value="sunset">🌅 Sunset Peach (ส้มพีช)</option>
-                            <option value="emerald">🌿 Emerald Mint (เขียวมินต์)</option>
-                            <option value="white">⚪ Clean White (ขาวสะอาด)</option>
-                            <option value="dark">⬛ Dark Forest (เขียวป่าลึก)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <div class="md:col-span-1">
-                        <label class="block text-xs font-bold text-slate-600 mb-1">ไอคอน (FontAwesome)</label>
-                        <select id="block-icon" class="w-full px-3 py-2.5 text-xs border border-slate-200 rounded-xl font-bold text-slate-800">
-                            <option value="fa-bullhorn">📢 ประกาศ</option>
-                            <option value="fa-award">🏆 ตราการันตี</option>
-                            <option value="fa-graduation-cap">🎓 การศึกษา</option>
-                            <option value="fa-school">🏫 สถานศึกษา</option>
-                            <option value="fa-circle-check">✅ ผ่านเกณฑ์</option>
-                            <option value="fa-star">⭐ โดดเด่น</option>
-                        </select>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-xs font-bold text-slate-600 mb-1">หมวดหมู่ย่อย / คำโปรยเล็ก</label>
-                        <input type="text" id="block-subtitle" class="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl font-bold text-slate-800" placeholder="เช่น สารจากผู้บริหาร / VTR แนะนำ">
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">หัวข้อหลักของกล่องข้อความ</label>
-                    <input type="text" id="block-title" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl font-bold text-slate-800" placeholder="กรอกหัวข้อข้อความ">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 mb-1">ข้อความรายละเอียด / สารต้อนรับ</label>
-                    <textarea id="block-body" rows="3" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none" placeholder="กรอกเนื้อหาข้อความต้อนรับ..."></textarea>
-                </div>
-
-                <div id="field-image-container" class="hidden space-y-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                    <label class="block text-xs font-bold text-slate-600">ลิงก์รูปภาพ / อินโฟกราฟิก (รองรับ Google Drive)</label>
-                    <input type="text" id="block-image-url" class="w-full px-4 py-2 text-xs border border-slate-200 rounded-xl font-mono" placeholder="วาง URL รูปภาพ">
-                </div>
-
-                <div id="field-vtr-container" class="hidden space-y-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">วางลิงก์ YouTube VTR</label>
-                        <input type="text" id="block-video-url" class="w-full px-4 py-2 text-xs border border-slate-200 rounded-xl font-mono" placeholder="https://www.youtube.com/watch?v=...">
-                    </div>
-                </div>
-
-                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-                    <div class="flex items-center justify-between">
-                        <label class="text-xs font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" id="block-show-btn" onchange="toggleBtnFields()" class="w-4 h-4 text-amber-500 rounded focus:ring-amber-400">
-                            <span>แสดงปุ่มกดลิงก์ในกล่องข้อความนี้</span>
-                        </label>
-                    </div>
-
-                    <div id="btn-config-fields" class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                        <div>
-                            <label class="block text-[10px] font-bold text-slate-500 mb-1">ข้อความบนปุ่ม</label>
-                            <input type="text" id="block-btn-label" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-bold" placeholder="เช่น ดาวน์โหลดเล่ม SAR สรุป">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-slate-500 mb-1">ลิงก์ปลายทาง (URL)</label>
-                            <input type="text" id="block-btn-url" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl font-mono" placeholder="https://...">
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between gap-2">
-                <button onclick="confirmDeleteCurrentBlock()" id="btn-delete-block" class="px-4 py-2 bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold rounded-xl hover:bg-rose-100 transition-all">
-                    <i class="fa-solid fa-trash mr-1"></i> ลบบล็อกนี้
-                </button>
-                <div class="flex gap-2">
-                    <button onclick="closeBlockModal()" class="px-4 py-2 bg-slate-200 text-slate-700 text-xs font-bold rounded-xl hover:bg-slate-300 transition-all">ยกเลิก</button>
-                    <button onclick="saveWelcomeBlock()" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition-all shadow-md">บันทึกบล็อก</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL EDIT DOC -->
-    <div id="edit-doc-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm transition-all">
-        <div class="bg-white rounded-3xl w-full max-w-lg overflow-hidden border-2 border-white sticker-card">
-            <div class="bg-gradient-to-r from-[#0d9488] to-emerald-600 p-5 text-white flex justify-between items-center">
-                <h3 id="edit-doc-modal-title" class="font-bold text-lg"><i class="fa-solid fa-file-pen mr-2"></i>แก้ไขข้อมูลเอกสารหลักฐาน</h3>
-                <button onclick="closeEditDocModal()" class="text-white/80 hover:text-white transition-colors"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <div class="p-6 space-y-4">
-                <input type="hidden" id="edit-doc-topic-idx">
-                <input type="hidden" id="edit-doc-doc-idx">
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">ชื่อเอกสารหลักฐาน</label>
-                    <input type="text" id="edit-doc-name" class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-medium">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">ลิงก์ Google Drive ของเอกสาร</label>
-                    <input type="text" id="edit-doc-url" placeholder="https://drive.google.com/file/d/..." class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-mono">
-                </div>
-                <div class="pt-4 flex justify-between gap-3">
-                    <button onclick="confirmDeleteDocItem()" id="btn-delete-doc" class="bg-rose-50 border border-rose-200 text-rose-600 px-4 py-2 rounded-xl text-xs font-bold">
-                        <i class="fa-solid fa-trash mr-1"></i> ลบเอกสารนี้
-                    </button>
-                    <div class="flex gap-2">
-                        <button onclick="closeEditDocModal()" class="bg-slate-100 text-slate-600 px-4 py-2 rounded-xl text-xs font-bold">ยกเลิก</button>
-                        <button onclick="saveDocItemEdits()" class="bg-[#0d9488] text-white px-5 py-2 rounded-xl text-xs font-bold">บันทึกข้อมูล</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // =========================================================================
-        // 📌 [ตำแหน่งที่ 2] ลิงก์สำหรับผูก Google Sheets Web API
-        // =========================================================================
-        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec";
-
-        let activeStandardId = 1;
-        let pendingConfirmAction = null;
-
-        const DEFAULT_DRIVE_LINK = "https://drive.google.com/file/d/1BpyjO5UApn25F6n00DqNEp134S8-Tq1-/view";
-
-        let headerSettings = {
-            schoolName: "โรงเรียนปากชมวิทยา",
-            schoolLogo: "",
-            headerTitle: "ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)",
-            headerSubtitle: "ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล"
-        };
-
-        let welcomeBlocks = [];
-
-        const defaultSarData = {
-            '1': [
-                {
-                    title: "1.1 ผลสัมฤทธิ์ทางการเรียนของผู้เรียน",
-                    documents: [
-                        { name: "เล่มรายงานสรุปผลสัมฤทธิ์ทางการเรียน 3 ปีการศึกษาย้อนหลัง", url: DEFAULT_DRIVE_LINK },
-                        { name: "รายงานสรุปผลการประเมินการอ่าน คิดวิเคราะห์ และเขียน", url: DEFAULT_DRIVE_LINK }
-                    ]
-                }
-            ],
-            '2': [
-                {
-                    title: "2.1 การกำหนดเป้าหมาย วิสัยทัศน์ และพันธกิจของสถานศึกษา",
-                    documents: [
-                        { name: "แผนพัฒนาคุณภาพการศึกษา 4 ปี (พ.ศ. 2566 - 2569)", url: DEFAULT_DRIVE_LINK }
-                    ]
-                }
-            ],
-            '3': [
-                {
-                    title: "3.1 จัดการเรียนรู้ผ่านกระบวนการคิดและปฏิบัติจริง (Active Learning)",
-                    documents: [
-                        { name: "ตัวอย่างแผนการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ", url: DEFAULT_DRIVE_LINK }
-                    ]
-                }
-            ]
-        };
-
-        let sarData = JSON.parse(JSON.stringify(defaultSarData));
-
-        function showToast(message, isSuccess = true) {
-            const toast = document.getElementById('toast-notification');
-            const icon = document.getElementById('toast-icon');
-            const msg = document.getElementById('toast-message');
-
-            if (!toast) return;
-
-            msg.textContent = message;
-            if (isSuccess) {
-                icon.className = "fa-solid fa-circle-check text-emerald-400 text-lg";
-            } else {
-                icon.className = "fa-solid fa-circle-exclamation text-rose-400 text-lg";
-            }
-
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-
-        function showConfirmModal(title, bodyText, onConfirm) {
-            document.getElementById('confirm-modal-title').innerText = title;
-            document.getElementById('confirm-modal-body').innerText = bodyText;
-            pendingConfirmAction = onConfirm;
-            document.getElementById('confirm-delete-modal').classList.remove('hidden');
-        }
-
-        function closeConfirmModal() {
-            document.getElementById('confirm-delete-modal').classList.add('hidden');
-            pendingConfirmAction = null;
-        }
-
-        document.getElementById('btn-confirm-action')?.addEventListener('click', function() {
-            if (typeof pendingConfirmAction === 'function') {
-                pendingConfirmAction();
-            }
-            closeConfirmModal();
-        });
-
-        async function syncDataToGoogleSheets() {
-            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
-                showToast("บันทึกเฉพาะในเครื่อง (ยังไม่ได้วาง API URL ในแอดมิน)", false);
-                return;
-            }
-            try {
-                showToast("กำลังส่งข้อมูลบันทึกลง Google Sheets...", true);
-                
-                const payload = {
-                    "1": sarData["1"] || [],
-                    "2": sarData["2"] || [],
-                    "3": sarData["3"] || [],
-                    "headerSettings": headerSettings,
-                    "welcomeBlocks": welcomeBlocks
-                };
-
-                const response = await fetch(GOOGLE_SHEET_API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify(payload)
-                });
-                
-                const resData = await response.json();
-                if (resData && resData.status === "success") {
-                    showToast("🎉 บันทึกลง Google Sheets เรียบร้อยแล้ว! หน้า Index จะอัปเดตทันที");
-                }
-            } catch (error) {
-                console.error("❌ บันทึกข้อมูลไปยัง Google Sheets ไม่สำเร็จ:", error);
-                showToast("บันทึกลงเครื่องสำเร็จ แต่ส่งไปยัง Google Sheets ไม่สำเร็จ", false);
-            }
-        }
-
-        async function fetchSheetData() {
-            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
-                console.log("ℹ️ ยังไม่ได้ใส่ GOOGLE_SHEET_API_URL ในหน้าแอดมิน");
-                return;
-            }
-            try {
-                const response = await fetch(GOOGLE_SHEET_API_URL);
-                const data = await response.json();
-                
-                if (data && data.status === "success") {
-                    delete data.status;
-
-                    if (data['1'] || data['2'] || data['3']) {
-                        sarData = { '1': data['1'] || [], '2': data['2'] || [], '3': data['3'] || [] };
-                        localStorage.setItem("sar_data_config", JSON.stringify(sarData));
-                    }
-
-                    if (data.headerSettings) {
-                        headerSettings = data.headerSettings;
-                        localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
-                    }
-
-                    if (data.welcomeBlocks) {
-                        welcomeBlocks = data.welcomeBlocks;
-                        localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
-                    }
-
-                    loadHeaderSettings();
-                    if (activeStandardId !== 4) {
-                        renderStandard(activeStandardId);
-                    } else {
-                        renderWelcomeBlocksListAdmin();
-                    }
-                }
-            } catch (error) {
-                console.error("❌ ไม่สามารถดึงข้อมูลจาก Google Sheets ได้:", error);
-            }
-        }
-
-        function loadHeaderSettings() {
-            const savedHeader = localStorage.getItem("site_header_config");
-            if (savedHeader) {
-                try { headerSettings = Object.assign(headerSettings, JSON.parse(savedHeader)); } catch (e) {}
-            }
-
-            document.getElementById('builder-school-name').value = headerSettings.schoolName || "";
-            document.getElementById('builder-school-logo').value = headerSettings.schoolLogo || "";
-            document.getElementById('builder-header-title').value = headerSettings.headerTitle || "";
-            document.getElementById('builder-header-subtitle').value = headerSettings.headerSubtitle || "";
-
-            liveUpdateHeader();
+            return url;
         }
 
         function liveUpdateHeader() {
@@ -606,8 +53,9 @@
             const logoFallback = document.getElementById("logo-icon-fallback");
 
             if (logoImg && logoFallback) {
-                if (headerSettings.schoolLogo && headerSettings.schoolLogo.trim() !== "") {
-                    logoImg.src = headerSettings.schoolLogo;
+                const directLogoUrl = convertDriveImageUrl(headerSettings.schoolLogo);
+                if (directLogoUrl) {
+                    logoImg.src = directLogoUrl;
                     logoImg.classList.remove("hidden");
                     logoFallback.classList.add("hidden");
                 } else {
@@ -889,6 +337,9 @@
                             <span class="text-xs md:text-sm text-slate-800 font-extrabold">${item.title}</span>
                         </div>
                         <div class="flex items-center gap-1.5">
+                            <button onclick="openEditTopicModal(${topicIndex})" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-all border border-slate-200">
+                                <i class="fa-solid fa-pen-to-square mr-1"></i> แก้ไขหัวข้อ
+                            </button>
                             <button onclick="openAddDocModal(${topicIndex})" class="px-3 py-1.5 bg-[#0d9488] text-white text-xs font-bold rounded-xl shadow-sm hover:bg-[#0f766e] transition-all">
                                 <i class="fa-solid fa-plus mr-1"></i> เพิ่มไฟล์
                             </button>
@@ -907,12 +358,36 @@
             calculateDynamicProgress();
         }
 
-        function toggleAccordion(id) {
-            const content = document.getElementById(`content-${id}`);
-            const icon = document.getElementById(`icon-${id}`);
-            if (content && icon) {
-                content.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180');
+        function openEditTopicModal(topicIdx) {
+            const key = String(activeStandardId);
+            const targetTopic = sarData[key] ? sarData[key][topicIdx] : null;
+            if (!targetTopic) return;
+            document.getElementById('edit-topic-idx').value = topicIdx;
+            document.getElementById('edit-topic-title-input').value = targetTopic.title || "";
+            document.getElementById('edit-topic-modal').classList.remove('hidden');
+        }
+
+        function closeEditTopicModal() {
+            document.getElementById('edit-topic-modal').classList.add('hidden');
+        }
+
+        function saveTopicTitleEdit() {
+            const topicIdx = parseInt(document.getElementById('edit-topic-idx').value);
+            const titleVal = document.getElementById('edit-topic-title-input').value.trim();
+
+            if (!titleVal) {
+                showToast("กรุณากรอกชื่อประเด็นพิจารณา", false);
+                return;
+            }
+
+            const key = String(activeStandardId);
+            if (sarData[key] && sarData[key][topicIdx]) {
+                sarData[key][topicIdx].title = titleVal;
+                localStorage.setItem("sar_data_config", JSON.stringify(sarData));
+                closeEditTopicModal();
+                renderStandard(activeStandardId);
+                syncDataToGoogleSheets();
+                showToast("แก้ไขชื่อประเด็นพิจารณาเรียบร้อยแล้ว");
             }
         }
 
