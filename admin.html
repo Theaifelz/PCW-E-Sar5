@@ -418,7 +418,7 @@
         // =========================================================================
         // 📌 [ตำแหน่งที่ 2] ลิงก์สำหรับผูก Google Sheets Web API
         // =========================================================================
-        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec";
+        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec";
 
         let activeStandardId = 1;
         let pendingConfirmAction = null;
@@ -507,7 +507,7 @@
         });
 
         async function syncDataToGoogleSheets() {
-            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
+            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec")) {
                 showToast("บันทึกเฉพาะในเครื่อง (ยังไม่ได้วาง API URL ในแอดมิน)", false);
                 return;
             }
