@@ -247,7 +247,7 @@
 
                     <div class="pt-3 text-right flex justify-end gap-2">
                         <button onclick="saveHeaderSettings()" class="bg-[#0d9488] hover:bg-[#0f766e] text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5">
-                            <i class="fa-solid fa-floppy-disk text-sm"></i> บันทึกส่วนหัว
+                            <i class="fa-solid fa-floppy-disk text-sm"></i> บันทึกส่วนหัวลง Google Sheets
                         </button>
                     </div>
                 </div>
@@ -317,7 +317,7 @@
                             <option value="fa-award">🏆 ตราการันตี</option>
                             <option value="fa-graduation-cap">🎓 การศึกษา</option>
                             <option value="fa-school">🏫 สถานศึกษา</option>
-                            <option value="fa-[#0d9488] fa-circle-check">✅ ผ่านเกณฑ์</option>
+                            <option value="fa-circle-check">✅ ผ่านเกณฑ์</option>
                             <option value="fa-star">⭐ โดดเด่น</option>
                         </select>
                     </div>
@@ -344,18 +344,8 @@
 
                 <div id="field-vtr-container" class="hidden space-y-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">ตัวเลือกที่ 1: วางลิงก์ YouTube VTR</label>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">วางลิงก์ YouTube VTR</label>
                         <input type="text" id="block-video-url" class="w-full px-4 py-2 text-xs border border-slate-200 rounded-xl font-mono" placeholder="https://www.youtube.com/watch?v=...">
-                    </div>
-                    <div class="relative flex py-1 items-center">
-                        <div class="flex-grow border-t border-slate-200"></div>
-                        <span class="flex-shrink mx-2 text-[10px] font-bold text-slate-400 uppercase">หรือ</span>
-                        <div class="flex-grow border-t border-slate-200"></div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">ตัวเลือกที่ 2: อัปโหลดไฟล์วิดีโอจากเครื่องคอมพิวเตอร์/มือถือ</label>
-                        <input type="file" id="block-video-file" accept="video/mp4,video/webm" onchange="handleLocalVideoUpload(event)" class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200">
-                        <p id="local-video-status" class="text-[10px] text-emerald-600 font-bold mt-1 hidden"><i class="fa-solid fa-circle-check"></i> พร้อมใช้งานไฟล์วิดีโอจากเครื่อง</p>
                     </div>
                 </div>
 
@@ -424,112 +414,13 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP SHOWING DOCUMENT DETAILS & DOWNLOAD -->
-    <div id="pdf-viewer-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all">
-        <div class="bg-white rounded-3xl w-full max-w-3xl h-[85vh] flex flex-col overflow-hidden border-2 border-white sticker-card shadow-2xl">
-            
-            <div class="bg-gradient-to-r from-[#ecfccb] via-[#fef9c3] to-[#ccfbf1] p-4 text-[#1e2e22] flex justify-between items-center border-b border-slate-200">
-                <div class="flex items-center gap-3 overflow-hidden mr-2">
-                    <div class="bg-rose-500 text-white w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center text-xl font-bold shadow-sm">
-                        <i class="fa-solid fa-file-pdf"></i>
-                    </div>
-                    <div class="truncate">
-                        <h3 id="pdf-modal-title" class="font-extrabold text-sm md:text-base text-slate-800 truncate">ชื่อเอกสารหลักฐาน</h3>
-                        <p class="text-[10px] text-slate-500 font-bold">ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล</p>
-                    </div>
-                </div>
-
-                <button onclick="closePdfViewerModal()" class="bg-white text-slate-600 w-9 h-9 rounded-xl flex items-center justify-center text-xs border border-slate-200 shadow-sm hover:bg-slate-100 transition-colors flex-shrink-0">
-                    <i class="fa-solid fa-xmark text-sm"></i>
-                </button>
-            </div>
-
-            <div class="bg-slate-100 p-2 border-b border-slate-200 flex gap-2">
-                <button id="modal-tab-btn-preview" onclick="switchModalTab('preview')" class="flex-1 py-2.5 px-4 rounded-xl text-xs md:text-sm font-extrabold transition-all flex items-center justify-center gap-2 bg-[#0d9488] text-white shadow-sm">
-                    <i class="fa-regular fa-eye text-base"></i> พรีวิวเอกสาร
-                </button>
-                <button id="modal-tab-btn-download" onclick="switchModalTab('download')" class="flex-1 py-2.5 px-4 rounded-xl text-xs md:text-sm font-extrabold transition-all flex items-center justify-center gap-2 bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">
-                    <i class="fa-solid fa-download text-base"></i> ดาวน์โหลดเอกสาร (Google Drive)
-                </button>
-            </div>
-
-            <div id="modal-tab-content-preview" class="flex-1 relative bg-gradient-to-b from-slate-50 to-slate-100 p-6 overflow-y-auto flex items-center justify-center">
-                <iframe id="pdf-viewer-iframe" src="" class="hidden w-full h-full border-none rounded-2xl shadow-inner"></iframe>
-
-                <div id="pdf-mock-preview" class="w-full max-w-lg bg-white p-8 rounded-3xl border-2 border-slate-200 shadow-xl space-y-5 text-center my-auto">
-                    <div class="w-20 h-20 bg-rose-50 text-rose-500 rounded-3xl flex items-center justify-center text-4xl mx-auto border-2 border-rose-100 shadow-inner">
-                        <i class="fa-solid fa-file-circle-check"></i>
-                    </div>
-                    <div>
-                        <span class="text-[10px] font-black text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 uppercase tracking-wide">หลักฐานเชิงประจักษ์ สมศ.๕</span>
-                        <h4 id="pdf-mock-title" class="font-extrabold text-slate-800 text-lg mt-3 leading-snug">ชื่อเอกสารหลักฐาน</h4>
-                        <p class="text-xs text-slate-500 font-medium mt-1">รายงานสารสนเทศประกอบการประเมินคุณภาพภายนอก (สมศ. รอบห้า)</p>
-                    </div>
-                    
-                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-left space-y-2.5 text-xs">
-                        <div class="flex justify-between text-slate-600">
-                            <span>สถานศึกษา:</span>
-                            <span class="font-bold text-slate-800" id="card-school-name">โรงเรียนปากชมวิทยา</span>
-                        </div>
-                        <div class="flex justify-between text-slate-600">
-                            <span>มาตรฐานการศึกษา:</span>
-                            <span class="font-bold text-slate-800" id="card-std-title">มาตรฐานที่ 1</span>
-                        </div>
-                        <div class="flex justify-between text-slate-600">
-                            <span>สถานะการจัดเตรียม:</span>
-                            <span class="font-bold text-emerald-600"><i class="fa-solid fa-circle-check"></i> พร้อมใช้งานแล้ว</span>
-                        </div>
-                        <div class="flex justify-between text-slate-600">
-                            <span>คลังจัดเก็บ:</span>
-                            <span class="font-bold text-slate-800">Google Drive Cloud Storage</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="modal-tab-content-download" class="hidden flex-1 p-6 md:p-10 bg-gradient-to-b from-slate-50 to-slate-100 overflow-y-auto flex items-center justify-center">
-                <div class="w-full max-w-lg bg-white p-8 rounded-3xl border-2 border-slate-200 shadow-xl space-y-6 text-center">
-                    <div class="w-20 h-20 bg-amber-50 text-amber-600 rounded-3xl flex items-center justify-center text-4xl mx-auto border-2 border-amber-100 shadow-inner">
-                        <i class="fa-solid fa-cloud-arrow-down"></i>
-                    </div>
-                    <div>
-                        <span class="text-[10px] font-black text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200 uppercase tracking-wide">คลังเอกสารดิจิทัล</span>
-                        <h4 id="download-doc-title" class="font-extrabold text-slate-800 text-lg mt-2 leading-snug">ชื่อเอกสาร</h4>
-                        <p class="text-xs text-slate-500 font-medium mt-1">กดปุ่มด้านล่างเพื่อเปิดดูและดาวน์โหลดไฟล์ฉบับจริงผ่าน Google Drive</p>
-                    </div>
-
-                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-left space-y-2.5 text-xs">
-                        <div class="flex justify-between text-slate-600">
-                            <span>สถานะระบบ:</span>
-                            <span id="dl-status-badge" class="font-bold text-emerald-600"><i class="fa-solid fa-circle-check"></i> พร้อมเปิดไฟล์ผ่าน Google Drive</span>
-                        </div>
-                        <div class="flex justify-between text-slate-600">
-                            <span>แหล่งจัดเก็บ:</span>
-                            <span id="dl-source-text" class="font-bold text-slate-800">Google Drive Cloud Storage</span>
-                        </div>
-                    </div>
-
-                    <div class="pt-2 space-y-3">
-                        <button onclick="downloadDirectlyFromModal()" class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-xs md:text-sm font-extrabold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 active:scale-95">
-                            <i class="fa-solid fa-arrow-up-right-from-square text-base"></i> เปิดไฟล์ใน Google Drive (แท็บใหม่)
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
     <script>
         // =========================================================================
-        // 📌 [ตำแหน่งที่ 2] บรรทัดที่ 428: ลิงก์สำหรับผูก Google Sheets Web API
+        // 📌 [ตำแหน่งที่ 2] ลิงก์สำหรับผูก Google Sheets Web API
         // =========================================================================
-        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec";
+        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec";
 
         let activeStandardId = 1;
-        let activeDocumentName = "";
-        let activeDocumentUrl = "";
-        let localVideoBase64 = "";
         let pendingConfirmAction = null;
 
         const DEFAULT_DRIVE_LINK = "https://drive.google.com/file/d/1BpyjO5UApn25F6n00DqNEp134S8-Tq1-/view";
@@ -573,8 +464,82 @@
 
         let sarData = JSON.parse(JSON.stringify(defaultSarData));
 
+        function showToast(message, isSuccess = true) {
+            const toast = document.getElementById('toast-notification');
+            const icon = document.getElementById('toast-icon');
+            const msg = document.getElementById('toast-message');
+
+            if (!toast) return;
+
+            msg.textContent = message;
+            if (isSuccess) {
+                icon.className = "fa-solid fa-circle-check text-emerald-400 text-lg";
+            } else {
+                icon.className = "fa-solid fa-circle-exclamation text-rose-400 text-lg";
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function showConfirmModal(title, bodyText, onConfirm) {
+            document.getElementById('confirm-modal-title').innerText = title;
+            document.getElementById('confirm-modal-body').innerText = bodyText;
+            pendingConfirmAction = onConfirm;
+            document.getElementById('confirm-delete-modal').classList.remove('hidden');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirm-delete-modal').classList.add('hidden');
+            pendingConfirmAction = null;
+        }
+
+        document.getElementById('btn-confirm-action')?.addEventListener('click', function() {
+            if (typeof pendingConfirmAction === 'function') {
+                pendingConfirmAction();
+            }
+            closeConfirmModal();
+        });
+
+        async function syncDataToGoogleSheets() {
+            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
+                showToast("บันทึกเฉพาะในเครื่อง (ยังไม่ได้วาง API URL ในแอดมิน)", false);
+                return;
+            }
+            try {
+                showToast("กำลังส่งข้อมูลบันทึกลง Google Sheets...", true);
+                
+                const payload = {
+                    "1": sarData["1"] || [],
+                    "2": sarData["2"] || [],
+                    "3": sarData["3"] || [],
+                    "headerSettings": headerSettings,
+                    "welcomeBlocks": welcomeBlocks
+                };
+
+                const response = await fetch(GOOGLE_SHEET_API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify(payload)
+                });
+                
+                const resData = await response.json();
+                if (resData && resData.status === "success") {
+                    showToast("🎉 บันทึกลง Google Sheets เรียบร้อยแล้ว! หน้า Index จะอัปเดตทันที");
+                }
+            } catch (error) {
+                console.error("❌ บันทึกข้อมูลไปยัง Google Sheets ไม่สำเร็จ:", error);
+                showToast("บันทึกลงเครื่องสำเร็จ แต่ส่งไปยัง Google Sheets ไม่สำเร็จ", false);
+            }
+        }
+
         async function fetchSheetData() {
-            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec")) {
+            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
                 console.log("ℹ️ ยังไม่ได้ใส่ GOOGLE_SHEET_API_URL ในหน้าแอดมิน");
                 return;
             }
@@ -582,11 +547,29 @@
                 const response = await fetch(GOOGLE_SHEET_API_URL);
                 const data = await response.json();
                 
-                if (data && !data.status) {
-                    sarData = data;
-                    localStorage.setItem("sar_data_config", JSON.stringify(data));
+                if (data && data.status === "success") {
+                    delete data.status;
+
+                    if (data['1'] || data['2'] || data['3']) {
+                        sarData = { '1': data['1'] || [], '2': data['2'] || [], '3': data['3'] || [] };
+                        localStorage.setItem("sar_data_config", JSON.stringify(sarData));
+                    }
+
+                    if (data.headerSettings) {
+                        headerSettings = data.headerSettings;
+                        localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
+                    }
+
+                    if (data.welcomeBlocks) {
+                        welcomeBlocks = data.welcomeBlocks;
+                        localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
+                    }
+
+                    loadHeaderSettings();
                     if (activeStandardId !== 4) {
                         renderStandard(activeStandardId);
+                    } else {
+                        renderWelcomeBlocksListAdmin();
                     }
                 }
             } catch (error) {
@@ -594,113 +577,37 @@
             }
         }
 
-        function showToast(message, isSuccess = true) {
-            const toast = document.getElementById("toast-notification");
-            const toastMsg = document.getElementById("toast-message");
-            const toastIcon = document.getElementById("toast-icon");
-
-            toastMsg.innerText = message;
-            if (isSuccess) {
-                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-lg";
-            } else {
-                toastIcon.className = "fa-solid fa-circle-xmark text-rose-400 text-lg";
-            }
-
-            toast.classList.remove("translate-y-20", "opacity-0", "pointer-events-none");
-            setTimeout(() => {
-                toast.classList.add("translate-y-20", "opacity-0", "pointer-events-none");
-            }, 3000);
-        }
-
-        function showConfirmModal(title, body, onConfirm) {
-            document.getElementById("confirm-modal-title").innerText = title;
-            document.getElementById("confirm-modal-body").innerText = body;
-            pendingConfirmAction = onConfirm;
-            document.getElementById("confirm-delete-modal").classList.remove("hidden");
-
-            document.getElementById("btn-confirm-action").onclick = function() {
-                if (typeof pendingConfirmAction === "function") {
-                    pendingConfirmAction();
-                }
-                closeConfirmModal();
-            };
-        }
-
-        function closeConfirmModal() {
-            document.getElementById("confirm-delete-modal").classList.add("hidden");
-            pendingConfirmAction = null;
-        }
-
-        function convertDriveImageUrl(url) {
-            if (!url) return "";
-            const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-            return match ? `https://lh3.googleusercontent.com/d/${match[1]}` : url;
-        }
-
-        function getGoogleDriveFileId(url) {
-            if (!url) return null;
-            const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-            return match ? match[1] : null;
-        }
-
         function loadHeaderSettings() {
             const savedHeader = localStorage.getItem("site_header_config");
             if (savedHeader) {
-                try {
-                    headerSettings = Object.assign(headerSettings, JSON.parse(savedHeader));
-                } catch (e) {}
+                try { headerSettings = Object.assign(headerSettings, JSON.parse(savedHeader)); } catch (e) {}
             }
-            
-            const schoolNameInput = document.getElementById("builder-school-name");
-            const logoInput = document.getElementById("builder-school-logo");
-            const titleInput = document.getElementById("builder-header-title");
-            const subtitleInput = document.getElementById("builder-header-subtitle");
 
-            if (schoolNameInput) schoolNameInput.value = headerSettings.schoolName || "";
-            if (logoInput) logoInput.value = headerSettings.schoolLogo || "";
-            if (titleInput) titleInput.value = headerSettings.headerTitle || "";
-            if (subtitleInput) subtitleInput.value = headerSettings.headerSubtitle || "";
+            document.getElementById('builder-school-name').value = headerSettings.schoolName || "";
+            document.getElementById('builder-school-logo').value = headerSettings.schoolLogo || "";
+            document.getElementById('builder-header-title').value = headerSettings.headerTitle || "";
+            document.getElementById('builder-header-subtitle').value = headerSettings.headerSubtitle || "";
 
-            updateHeaderDOM();
+            liveUpdateHeader();
         }
 
         function liveUpdateHeader() {
-            const schoolNameInput = document.getElementById("builder-school-name");
-            const logoInput = document.getElementById("builder-school-logo");
-            const titleInput = document.getElementById("builder-header-title");
-            const subtitleInput = document.getElementById("builder-header-subtitle");
+            headerSettings.schoolName = document.getElementById('builder-school-name').value.trim();
+            headerSettings.schoolLogo = document.getElementById('builder-school-logo').value.trim();
+            headerSettings.headerTitle = document.getElementById('builder-header-title').value.trim();
+            headerSettings.headerSubtitle = document.getElementById('builder-header-subtitle').value.trim();
 
-            headerSettings.schoolName = schoolNameInput ? schoolNameInput.value : headerSettings.schoolName;
-            headerSettings.schoolLogo = logoInput ? logoInput.value : headerSettings.schoolLogo;
-            headerSettings.headerTitle = titleInput ? titleInput.value : headerSettings.headerTitle;
-            headerSettings.headerSubtitle = subtitleInput ? subtitleInput.value : headerSettings.headerSubtitle;
+            document.getElementById("header-title-display").textContent = headerSettings.headerTitle || "ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)";
+            document.getElementById("header-subtitle-display").textContent = headerSettings.headerSubtitle || "ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล";
 
-            updateHeaderDOM();
-        }
-
-        function saveHeaderSettings() {
-            liveUpdateHeader();
-            localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
-            showToast("🎉 บันทึกการตั้งค่าส่วนหัวเรียบร้อยแล้ว!");
-        }
-
-        function updateHeaderDOM() {
-            const schoolNameEls = document.querySelectorAll("#school-name-text, #card-school-name");
-            schoolNameEls.forEach(el => el.textContent = headerSettings.schoolName || "โรงเรียนปากชมวิทยา");
-
-            const titleEl = document.getElementById("header-title-display");
-            if (titleEl) titleEl.textContent = headerSettings.headerTitle || "ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)";
-
-            const subtitleEl = document.getElementById("header-subtitle-display");
-            if (subtitleEl) subtitleEl.textContent = headerSettings.headerSubtitle || "ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล";
+            document.querySelectorAll("#school-name-text").forEach(el => el.textContent = headerSettings.schoolName || "โรงเรียนปากชมวิทยา");
 
             const logoImg = document.getElementById("logo-image-display");
             const logoFallback = document.getElementById("logo-icon-fallback");
 
             if (logoImg && logoFallback) {
-                const convertedLogoUrl = convertDriveImageUrl(headerSettings.schoolLogo);
-                if (convertedLogoUrl && convertedLogoUrl.trim() !== "") {
-                    logoImg.src = convertedLogoUrl;
+                if (headerSettings.schoolLogo && headerSettings.schoolLogo.trim() !== "") {
+                    logoImg.src = headerSettings.schoolLogo;
                     logoImg.classList.remove("hidden");
                     logoFallback.classList.add("hidden");
                 } else {
@@ -710,23 +617,16 @@
             }
         }
 
-        function loadSarData() {
-            const savedData = localStorage.getItem("sar_data_config");
-            if (savedData) {
-                try {
-                    sarData = JSON.parse(savedData);
-                } catch (e) {}
-            } else {
-                localStorage.setItem("sar_data_config", JSON.stringify(sarData));
-            }
+        function saveHeaderSettings() {
+            liveUpdateHeader();
+            localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
+            syncDataToGoogleSheets();
         }
 
         function loadWelcomeBlocks() {
             const savedBlocks = localStorage.getItem("site_welcome_blocks_config");
             if (savedBlocks) {
-                try {
-                    welcomeBlocks = JSON.parse(savedBlocks);
-                } catch (e) {}
+                try { welcomeBlocks = JSON.parse(savedBlocks); } catch (e) {}
             }
             renderWelcomeBlocksListAdmin();
         }
@@ -737,33 +637,26 @@
             container.innerHTML = "";
 
             if (!Array.isArray(welcomeBlocks) || welcomeBlocks.length === 0) {
-                container.innerHTML = `
-                    <div class="p-6 text-center border-2 border-dashed border-slate-200 rounded-2xl">
-                        <i class="fa-solid fa-layer-group text-slate-300 text-3xl mb-2"></i>
-                        <p class="text-slate-400 font-bold text-xs">ยังไม่มีการเพิ่มบล็อกข้อความต้อนรับ</p>
-                    </div>
-                `;
+                container.innerHTML = `<p class="text-xs text-slate-400 font-bold text-center py-4">ยังไม่มีบล็อกข้อความต้อนรับ กดปุ่มด้านบนเพื่อเพิ่มบล็อกใหม่</p>`;
                 return;
             }
 
-            welcomeBlocks.forEach((block, index) => {
+            welcomeBlocks.forEach((block, idx) => {
                 const div = document.createElement('div');
-                div.className = "p-4 bg-slate-50 border border-slate-200 rounded-2xl flex justify-between items-center gap-3";
+                div.className = "p-4 bg-slate-50 rounded-2xl border border-slate-200 flex justify-between items-center gap-3";
                 div.innerHTML = `
-                    <div class="flex items-center gap-3 overflow-hidden">
-                        <div class="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 flex-shrink-0">
-                            <i class="fa-solid ${block.icon || 'fa-info-circle'}"></i>
+                    <div class="flex items-center gap-3 truncate">
+                        <div class="w-8 h-8 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 flex-shrink-0 text-sm">
+                            <i class="fa-solid ${block.icon || 'fa-bullhorn'}"></i>
                         </div>
                         <div class="truncate">
                             <h4 class="font-bold text-xs md:text-sm text-slate-800 truncate">${block.title || 'ไม่มีหัวข้อ'}</h4>
-                            <p class="text-[10px] text-slate-400 font-medium">ธีม: ${block.style || 'lime'} | ชนิด: ${block.type || 'text'}</p>
+                            <p class="text-[10px] text-slate-400 font-medium truncate">${block.subtitle || 'บล็อกข้อความ'}</p>
                         </div>
                     </div>
-                    <div class="flex items-center gap-2 flex-shrink-0">
-                        <button onclick="openEditBlockModal(${index})" class="px-3 py-1.5 bg-white border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-100">
-                            <i class="fa-solid fa-pen-to-square"></i> แก้ไข
-                        </button>
-                    </div>
+                    <button onclick="openEditBlockModal(${idx})" class="px-3 py-1.5 bg-white text-slate-700 text-xs font-bold rounded-xl border border-slate-200 hover:bg-slate-100 transition-all flex-shrink-0">
+                        <i class="fa-solid fa-pen-to-square mr-1"></i> แก้ไข
+                    </button>
                 `;
                 container.appendChild(div);
             });
@@ -784,9 +677,6 @@
             document.getElementById('block-btn-label').value = "";
             document.getElementById('block-btn-url').value = "";
             document.getElementById('btn-delete-block').classList.add('hidden');
-            
-            localVideoBase64 = "";
-            document.getElementById('local-video-status').classList.add('hidden');
 
             toggleBlockFields();
             toggleBtnFields();
@@ -811,13 +701,6 @@
             document.getElementById('block-btn-label').value = block.btnLabel || "";
             document.getElementById('block-btn-url').value = block.btnUrl || "";
             document.getElementById('btn-delete-block').classList.remove('hidden');
-
-            localVideoBase64 = block.videoData || "";
-            if (localVideoBase64) {
-                document.getElementById('local-video-status').classList.remove('hidden');
-            } else {
-                document.getElementById('local-video-status').classList.add('hidden');
-            }
 
             toggleBlockFields();
             toggleBtnFields();
@@ -848,28 +731,8 @@
         function toggleBtnFields() {
             const showBtn = document.getElementById('block-show-btn').checked;
             const btnBox = document.getElementById('btn-config-fields');
-            if (showBtn) {
-                btnBox.classList.remove('hidden');
-            } else {
-                btnBox.classList.add('hidden');
-            }
-        }
-
-        function handleLocalVideoUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                if (file.size > 20 * 1024 * 1024) {
-                    showToast("ไฟล์วิดีโอใหญ่เกินไป (ไม่เกิน 20MB)", false);
-                    return;
-                }
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    localVideoBase64 = e.target.result;
-                    document.getElementById('local-video-status').classList.remove('hidden');
-                    showToast("แนบไฟล์วิดีโอเรียบร้อยแล้ว");
-                };
-                reader.readAsDataURL(file);
-            }
+            if (showBtn) btnBox.classList.remove('hidden');
+            else btnBox.classList.add('hidden');
         }
 
         function saveWelcomeBlock() {
@@ -881,10 +744,8 @@
                 subtitle: document.getElementById('block-subtitle').value.trim(),
                 title: document.getElementById('block-title').value.trim(),
                 body: document.getElementById('block-body').value.trim(),
-                imageUrl: convertDriveImageUrl(document.getElementById('block-image-url').value.trim()),
+                imageUrl: document.getElementById('block-image-url').value.trim(),
                 videoUrl: document.getElementById('block-video-url').value.trim(),
-                videoData: localVideoBase64,
-                videoType: localVideoBase64 ? 'local' : 'url',
                 showBtn: document.getElementById('block-show-btn').checked,
                 btnLabel: document.getElementById('block-btn-label').value.trim(),
                 btnUrl: document.getElementById('block-btn-url').value.trim()
@@ -905,7 +766,7 @@
             localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
             closeBlockModal();
             renderWelcomeBlocksListAdmin();
-            showToast("บันทึกข้อมูลบล็อกเรียบร้อยแล้ว");
+            syncDataToGoogleSheets();
         }
 
         function confirmDeleteCurrentBlock() {
@@ -917,7 +778,7 @@
                     localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
                     closeBlockModal();
                     renderWelcomeBlocksListAdmin();
-                    showToast("ลบบล็อกเรียบร้อยแล้ว");
+                    syncDataToGoogleSheets();
                 });
             }
         }
@@ -1014,9 +875,6 @@
                         </span>
                         
                         <div class="flex items-center gap-1.5 self-end sm:self-auto flex-shrink-0">
-                            <button onclick="openDocumentModal(${topicIndex}, ${docIndex})" class="px-3 py-1.5 bg-[#0d9488] hover:bg-[#0f766e] text-white text-xs font-bold rounded-xl shadow-sm transition-all flex items-center gap-1 active:scale-95">
-                                <i class="fa-regular fa-eye text-xs"></i> ดูเอกสาร
-                            </button>
                             <button onclick="openEditDocModal(${topicIndex}, ${docIndex})" class="px-3 py-1.5 bg-slate-50 text-slate-600 text-xs font-bold rounded-xl border border-slate-200 hover:bg-slate-100 transition-all">
                                 <i class="fa-solid fa-pen-to-square"></i> แก้ไข
                             </button>
@@ -1108,7 +966,7 @@
             localStorage.setItem("sar_data_config", JSON.stringify(sarData));
             closeEditDocModal();
             renderStandard(activeStandardId);
-            showToast("บันทึกข้อมูลเอกสารเรียบร้อยแล้ว");
+            syncDataToGoogleSheets();
         }
 
         function confirmDeleteDocItem() {
@@ -1121,7 +979,7 @@
                 localStorage.setItem("sar_data_config", JSON.stringify(sarData));
                 closeEditDocModal();
                 renderStandard(activeStandardId);
-                showToast("ลบเอกสารเรียบร้อยแล้ว");
+                syncDataToGoogleSheets();
             });
         }
 
@@ -1133,7 +991,7 @@
                 sarData[key].push({ title: topicTitle.trim(), documents: [] });
                 localStorage.setItem("sar_data_config", JSON.stringify(sarData));
                 renderStandard(activeStandardId);
-                showToast("เพิ่มประเด็นพิจารณาใหม่เรียบร้อยแล้ว");
+                syncDataToGoogleSheets();
             }
         }
 
@@ -1143,79 +1001,20 @@
                 sarData[key].splice(topicIdx, 1);
                 localStorage.setItem("sar_data_config", JSON.stringify(sarData));
                 renderStandard(activeStandardId);
-                showToast("ลบประเด็นพิจารณาเรียบร้อยแล้ว");
+                syncDataToGoogleSheets();
             });
         }
 
-        function openDocumentModal(topicIdx, docIdx) {
-            const key = String(activeStandardId);
-            const doc = sarData[key]?.[topicIdx]?.documents?.[docIdx];
-            if (!doc) return;
-
-            activeDocumentName = doc.name;
-            activeDocumentUrl = doc.url || DEFAULT_DRIVE_LINK;
-
-            const modal = document.getElementById('pdf-viewer-modal');
-            const modalTitle = document.getElementById('pdf-modal-title');
-            const mockTitle = document.getElementById('pdf-mock-title');
-            const downloadDocTitle = document.getElementById('download-doc-title');
-            const cardStdTitle = document.getElementById('card-std-title');
-            const iframe = document.getElementById('pdf-viewer-iframe');
-            const mockPreview = document.getElementById('pdf-mock-preview');
-
-            if (modalTitle) modalTitle.innerText = activeDocumentName;
-            if (mockTitle) mockTitle.innerText = activeDocumentName;
-            if (downloadDocTitle) downloadDocTitle.innerText = activeDocumentName;
-            if (cardStdTitle) cardStdTitle.innerText = `มาตรฐานที่ ${activeStandardId}`;
-
-            const fileId = getGoogleDriveFileId(activeDocumentUrl);
-
-            if (fileId) {
-                iframe.src = `https://drive.google.com/file/d/${fileId}/preview`;
-                iframe.classList.remove('hidden');
-                mockPreview.classList.add('hidden');
-            } else {
-                iframe.src = "";
-                iframe.classList.add('hidden');
-                mockPreview.classList.remove('hidden');
-            }
-
-            switchModalTab('preview');
-            modal.classList.remove('hidden');
-        }
-
-        function switchModalTab(tabName) {
-            const btnPreview = document.getElementById('modal-tab-btn-preview');
-            const btnDownload = document.getElementById('modal-tab-btn-download');
-            const contentPreview = document.getElementById('modal-tab-content-preview');
-            const contentDownload = document.getElementById('modal-tab-content-download');
-
-            if (tabName === 'preview') {
-                btnPreview.className = "flex-1 py-2.5 px-4 rounded-xl text-xs md:text-sm font-extrabold transition-all flex items-center justify-center gap-2 bg-[#0d9488] text-white shadow-sm";
-                btnDownload.className = "flex-1 py-2.5 px-4 rounded-xl text-xs md:text-sm font-extrabold transition-all flex items-center justify-center gap-2 bg-white text-slate-600 border border-slate-200 hover:bg-slate-50";
-                contentPreview.classList.remove('hidden');
-                contentDownload.classList.add('hidden');
-            } else {
-                btnDownload.className = "flex-1 py-2.5 px-4 rounded-xl text-xs md:text-sm font-extrabold transition-all flex items-center justify-center gap-2 bg-[#0d9488] text-white shadow-sm";
-                btnPreview.className = "flex-1 py-2.5 px-4 rounded-xl text-xs md:text-sm font-extrabold transition-all flex items-center justify-center gap-2 bg-white text-slate-600 border border-slate-200 hover:bg-slate-50";
-                contentDownload.classList.remove('hidden');
-                contentPreview.classList.add('hidden');
-            }
-        }
-
-        function downloadDirectlyFromModal() {
-            const targetUrl = (activeDocumentUrl && activeDocumentUrl.trim() !== "") ? activeDocumentUrl : DEFAULT_DRIVE_LINK;
-            window.open(targetUrl, '_blank');
-        }
-
-        function closePdfViewerModal() {
-            document.getElementById('pdf-viewer-modal').classList.add('hidden');
-            document.getElementById('pdf-viewer-iframe').src = "";
-        }
-
         window.onload = function() {
-            loadSarData();
-            loadHeaderSettings();
+            const savedHeader = localStorage.getItem("site_header_config");
+            if (savedHeader) {
+                try { headerSettings = Object.assign(headerSettings, JSON.parse(savedHeader)); } catch (e) {}
+            }
+            const savedSar = localStorage.getItem("sar_data_config");
+            if (savedSar) {
+                try { sarData = JSON.parse(savedSar); } catch (e) {}
+            }
+
             fetchSheetData();
             switchTab(1);
         };
