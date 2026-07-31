@@ -65,7 +65,7 @@
             </div>
         </header>
 
-        <!-- 2. ส่วนกล่องข้อความต้อนรับ (แสดงผลตามที่แอดมินจัดไว้อย่างเป็นระเบียบ) -->
+        <!-- 2. ส่วนกล่องข้อความต้อนรับ -->
         <div id="welcome-blocks-display-container" class="max-w-4xl mx-auto px-4 mt-8 space-y-4"></div>
 
         <!-- 3. พื้นที่หลักสำหรับการแสดงผลของกรรมการ -->
@@ -97,7 +97,6 @@
     <div id="pdf-viewer-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all">
         <div class="bg-white rounded-3xl w-full max-w-3xl h-[85vh] flex flex-col overflow-hidden border-2 border-white sticker-card shadow-2xl">
             
-            <!-- Modal Header Bar -->
             <div class="bg-gradient-to-r from-[#ecfccb] via-[#fef9c3] to-[#ccfbf1] p-4 text-[#1e2e22] flex justify-between items-center border-b border-slate-200">
                 <div class="flex items-center gap-3 overflow-hidden mr-2">
                     <div class="bg-rose-500 text-white w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center text-xl font-bold shadow-sm">
@@ -114,7 +113,6 @@
                 </button>
             </div>
 
-            <!-- Modal 2 Tabs Selection Bar -->
             <div class="bg-slate-100 p-2 border-b border-slate-200 flex gap-2">
                 <button id="modal-tab-btn-preview" onclick="switchModalTab('preview')" class="flex-1 py-2.5 px-4 rounded-xl text-xs md:text-sm font-extrabold transition-all flex items-center justify-center gap-2 bg-[#0d9488] text-white shadow-sm">
                     <i class="fa-regular fa-eye text-base"></i> พรีวิวเอกสาร
@@ -124,12 +122,9 @@
                 </button>
             </div>
 
-            <!-- TAB 1: พรีวิวเอกสาร -->
             <div id="modal-tab-content-preview" class="flex-1 relative bg-gradient-to-b from-slate-50 to-slate-100 p-6 overflow-y-auto flex items-center justify-center">
-                <!-- Iframe สำหรับ Google Drive PDF (กรณีมีลิงก์) -->
                 <iframe id="pdf-viewer-iframe" src="" class="hidden w-full h-full border-none rounded-2xl shadow-inner"></iframe>
 
-                <!-- รูปแบบการ์ดพรีวิวเอกสารจำลอง -->
                 <div id="pdf-mock-preview" class="w-full max-w-lg bg-white p-8 rounded-3xl border-2 border-slate-200 shadow-xl space-y-5 text-center my-auto">
                     <div class="w-20 h-20 bg-rose-50 text-rose-500 rounded-3xl flex items-center justify-center text-4xl mx-auto border-2 border-rose-100 shadow-inner">
                         <i class="fa-solid fa-file-circle-check"></i>
@@ -153,15 +148,10 @@
                             <span>สถานะการจัดเตรียม:</span>
                             <span class="font-bold text-emerald-600"><i class="fa-solid fa-circle-check"></i> จัดเตรียมเอกสารเรียบร้อยแล้ว</span>
                         </div>
-                        <div class="flex justify-between text-slate-600">
-                            <span>รูปแบบเอกสาร:</span>
-                            <span class="font-bold text-slate-800">ไฟล์เอกสารดิจิทัล (PDF)</span>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 2: หน้าดาวน์โหลดเอกสาร (Download Center) -->
             <div id="modal-tab-content-download" class="hidden flex-1 p-6 md:p-10 bg-gradient-to-b from-slate-50 to-slate-100 overflow-y-auto flex items-center justify-center">
                 <div class="w-full max-w-lg bg-white p-8 rounded-3xl border-2 border-slate-200 shadow-xl space-y-6 text-center">
                     <div class="w-20 h-20 bg-amber-50 text-amber-600 rounded-3xl flex items-center justify-center text-4xl mx-auto border-2 border-amber-100 shadow-inner">
@@ -171,17 +161,6 @@
                         <span class="text-[10px] font-black text-amber-700 bg-amber-50 px-3 py-1 rounded-full border border-amber-200 uppercase tracking-wide">คลังเอกสารดิจิทัล</span>
                         <h4 id="download-doc-title" class="font-extrabold text-slate-800 text-lg mt-2 leading-snug">ชื่อเอกสาร</h4>
                         <p class="text-xs text-slate-500 font-medium mt-1">กดปุ่มด้านล่างเพื่อเปิดดูและดาวน์โหลดไฟล์ฉบับจริงผ่าน Google Drive</p>
-                    </div>
-
-                    <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-left space-y-2.5 text-xs">
-                        <div class="flex justify-between text-slate-600">
-                            <span>สถานะระบบ:</span>
-                            <span id="dl-status-badge" class="font-bold text-emerald-600"><i class="fa-solid fa-circle-check"></i> พร้อมเปิดไฟล์ผ่าน Google Drive</span>
-                        </div>
-                        <div class="flex justify-between text-slate-600">
-                            <span>แหล่งจัดเก็บ:</span>
-                            <span id="dl-source-text" class="font-bold text-slate-800">Google Drive Cloud Storage</span>
-                        </div>
                     </div>
 
                     <div class="pt-2 space-y-3">
@@ -197,9 +176,9 @@
 
     <script>
         // =========================================================================
-        // 📌 [ตำแหน่งที่ 1] บรรทัดที่ 282: ลิงก์สำหรับผูก Google Sheets Web API
+        // 📌 [ตำแหน่งที่ 1] ลิงก์สำหรับผูก Google Sheets Web API
         // =========================================================================
-        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec";
+        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec";
 
         let activeStandardId = 1;
         let activeDocumentName = "";
@@ -247,7 +226,7 @@
         let sarData = JSON.parse(JSON.stringify(defaultSarData));
 
         async function fetchSheetData() {
-            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec")) {
+            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
                 console.log("ℹ️ ยังไม่ได้ใส่ GOOGLE_SHEET_API_URL ระบบจะใช้ข้อมูลเริ่มต้น/Local Cache");
                 return;
             }
@@ -255,9 +234,29 @@
                 const response = await fetch(GOOGLE_SHEET_API_URL);
                 const data = await response.json();
                 
-                if (data && !data.status) {
-                    sarData = data;
-                    localStorage.setItem("sar_data_config", JSON.stringify(data));
+                if (data && data.status === "success") {
+                    delete data.status;
+                    
+                    // 1. อัปเดตข้อมูลประเด็น SAR
+                    if (data['1'] || data['2'] || data['3']) {
+                        sarData = { '1': data['1'] || [], '2': data['2'] || [], '3': data['3'] || [] };
+                        localStorage.setItem("sar_data_config", JSON.stringify(sarData));
+                    }
+
+                    // 2. อัปเดตส่วนหัวและโลโก้
+                    if (data.headerSettings) {
+                        headerSettings = data.headerSettings;
+                        localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
+                    }
+
+                    // 3. อัปเดตกล่องต้อนรับ
+                    if (data.welcomeBlocks) {
+                        welcomeBlocks = data.welcomeBlocks;
+                        localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
+                    }
+
+                    updateHeaderDOM();
+                    renderWelcomeBlocks();
                     renderStandard(activeStandardId);
                 }
             } catch (error) {
@@ -271,28 +270,7 @@
             return match ? match[1] : null;
         }
 
-        function loadEvaluatorData() {
-            const savedHeader = localStorage.getItem("site_header_config");
-            if (savedHeader) {
-                try {
-                    headerSettings = Object.assign(headerSettings, JSON.parse(savedHeader));
-                } catch (e) {}
-            }
-
-            const savedSar = localStorage.getItem("sar_data_config");
-            if (savedSar) {
-                try {
-                    sarData = JSON.parse(savedSar);
-                } catch (e) {}
-            }
-
-            const savedBlocks = localStorage.getItem("site_welcome_blocks_config");
-            if (savedBlocks) {
-                try {
-                    welcomeBlocks = JSON.parse(savedBlocks);
-                } catch (e) {}
-            }
-
+        function updateHeaderDOM() {
             const titleEl = document.getElementById("header-title-display");
             if (titleEl) titleEl.textContent = headerSettings.headerTitle || "ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)";
 
@@ -315,7 +293,25 @@
                     logoFallback.classList.remove("hidden");
                 }
             }
+        }
 
+        function loadEvaluatorData() {
+            const savedHeader = localStorage.getItem("site_header_config");
+            if (savedHeader) {
+                try { headerSettings = Object.assign(headerSettings, JSON.parse(savedHeader)); } catch (e) {}
+            }
+
+            const savedSar = localStorage.getItem("sar_data_config");
+            if (savedSar) {
+                try { sarData = JSON.parse(savedSar); } catch (e) {}
+            }
+
+            const savedBlocks = localStorage.getItem("site_welcome_blocks_config");
+            if (savedBlocks) {
+                try { welcomeBlocks = JSON.parse(savedBlocks); } catch (e) {}
+            }
+
+            updateHeaderDOM();
             renderWelcomeBlocks();
         }
 
