@@ -9,7 +9,7 @@
     
     <!-- 📌 ตั้งค่า URL ของ Google Apps Script ที่นี่ -->
     <script>
-        const GOOGLE_SHEET_API_URL = "วาง URL ของ Apps Script ที่นี่"; 
+        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec"; 
     </script>
 
     <style>
@@ -37,7 +37,7 @@
     <script>
         // ฟังก์ชันดึงข้อมูลจาก Google Sheets จริง
         async function fetchSheetData() {
-            if (GOOGLE_SHEET_API_URL.includes("https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec")) {
+            if (GOOGLE_SHEET_API_URL.includes("script.google.com")) {
                 try {
                     const response = await fetch(GOOGLE_SHEET_API_URL);
                     const data = await response.json();
