@@ -39,6 +39,31 @@
 </head>
 <body class="bg-[#fcfcf9] text-[#1e2e22] min-h-screen flex flex-col justify-between">
 
+    <!-- Custom Toast Notification Container -->
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-800 text-white px-5 py-3 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+            <span id="toast-message" class="text-xs md:text-sm font-bold">ข้อความแจ้งเตือน</span>
+        </div>
+    </div>
+
+    <!-- Custom Delete Confirmation Modal -->
+    <div id="confirm-delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden border-2 border-white sticker-card p-6 text-center space-y-4">
+            <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center text-3xl mx-auto border border-rose-100">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div>
+                <h3 id="confirm-modal-title" class="font-extrabold text-slate-800 text-base">ยืนยันการลบข้อมูล</h3>
+                <p id="confirm-modal-body" class="text-xs text-slate-500 font-medium mt-1">คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?</p>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeConfirmModal()" class="flex-1 py-2.5 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-200">ยกเลิก</button>
+                <button id="btn-confirm-action" class="flex-1 py-2.5 bg-rose-500 text-white rounded-xl text-xs font-bold hover:bg-rose-600 shadow-md">ยืนยันลบ</button>
+            </div>
+        </div>
+    </div>
+
     <div>
         <!-- แถบด้านบนสุดชี้แจงโหมดและปุ่มสลับการทำงาน -->
         <div class="sticky top-0 z-40 bg-gradient-to-r from-[#1e2e22] to-slate-900 text-white py-3 px-4 shadow-xl border-b border-emerald-500/30">
@@ -100,10 +125,8 @@
                     </div>
                 </div>
 
-                <!-- การรวมเกจแบบตอบสนอง -->
                 <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                     
-                    <!-- ฝั่งซ้าย: เกจหลักขนาดใหญ่แสดงความก้าวหน้าภาพรวม -->
                     <div class="md:col-span-5 flex flex-col items-center justify-center p-4 bg-[#fcfcf9] rounded-2xl border border-lime-100 relative">
                         <p class="text-xs font-bold text-emerald-800 mb-2 uppercase tracking-wider text-center">สัดส่วนความพร้อมรวมทุกมาตรฐาน</p>
                         
@@ -124,7 +147,6 @@
                         </div>
                     </div>
 
-                    <!-- ฝั่งขวา: 3 เกจย่อยของแต่ละมาตรฐาน -->
                     <div class="md:col-span-7 grid grid-cols-3 gap-3">
                         <div class="flex flex-col items-center justify-between p-3 bg-white rounded-2xl border border-slate-100 shadow-sm">
                             <div class="w-full relative">
@@ -166,7 +188,6 @@
         <!-- 3. พื้นที่หลักสำหรับการแสดงผลและสลับแท็บเมนู -->
         <main class="max-w-4xl mx-auto px-4 py-8">
             
-            <!-- เมนูแท็บหลัก -->
             <div id="tabs-navigation-container" class="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 border-b border-slate-200/60 pb-6">
                 <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn px-4 md:px-5 py-3 rounded-2xl text-xs md:text-sm font-bold transition-all duration-300 bg-[#0d9488] text-white sticker-btn scale-105">
                     <i class="fa-solid fa-star mr-1.5"></i>มาตรฐานที่ 1
@@ -182,7 +203,6 @@
                 </button>
             </div>
 
-            <!-- กล่องแสดงตัวชี้วัดและ Accordion หลัก (สำหรับแท็บ 1, 2, 3) -->
             <div id="standards-container" class="space-y-4">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-extrabold text-slate-800 text-sm md:text-base flex items-center gap-2">
@@ -195,9 +215,7 @@
                 <div id="accordion-container" class="space-y-4"></div>
             </div>
 
-            <!-- กล่องตกแต่งหน้าแรกและตั้งค่าหลัก (สำหรับแท็บ 4 - โหมดแอดมิน) -->
             <div id="builder-container" class="hidden space-y-6">
-                <!-- ตั้งค่าส่วนหัว -->
                 <div class="bg-white border-2 border-white p-6 rounded-3xl sticker-card space-y-4">
                     <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                         <h3 class="font-extrabold text-slate-800 text-sm md:text-base flex items-center gap-2">
@@ -234,7 +252,6 @@
                     </div>
                 </div>
 
-                <!-- เครื่องมือสร้างบล็อกข้อความต้อนรับและสารสนเทศ สไตล์ Google Sites -->
                 <div class="bg-white border-2 border-white p-6 rounded-3xl sticker-card space-y-4">
                     <div class="flex justify-between items-center border-b border-slate-100 pb-3">
                         <div>
@@ -248,7 +265,6 @@
                         </button>
                     </div>
 
-                    <!-- รายการบล็อกที่สร้างไว้ -->
                     <div id="welcome-blocks-list" class="space-y-3"></div>
                 </div>
             </div>
@@ -321,13 +337,11 @@
                     <textarea id="block-body" rows="3" class="w-full px-4 py-2.5 text-xs md:text-sm border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none" placeholder="กรอกเนื้อหาข้อความต้อนรับ..."></textarea>
                 </div>
 
-                <!-- ฟิลด์เพิ่มเติมสำหรับรูปภาพ -->
                 <div id="field-image-container" class="hidden space-y-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
                     <label class="block text-xs font-bold text-slate-600">ลิงก์รูปภาพ / อินโฟกราฟิก (รองรับ Google Drive)</label>
                     <input type="text" id="block-image-url" class="w-full px-4 py-2 text-xs border border-slate-200 rounded-xl font-mono" placeholder="วาง URL รูปภาพ">
                 </div>
 
-                <!-- ฟิลด์เพิ่มเติมสำหรับวิดีโอ VTR -->
                 <div id="field-vtr-container" class="hidden space-y-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">ตัวเลือกที่ 1: วางลิงก์ YouTube VTR</label>
@@ -345,7 +359,6 @@
                     </div>
                 </div>
 
-                <!-- สวิตช์เปิด/ปิดปุ่มกดในกล่องข้อความ -->
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
                     <div class="flex items-center justify-between">
                         <label class="text-xs font-bold text-slate-700 flex items-center gap-2 cursor-pointer">
@@ -369,7 +382,7 @@
             </div>
 
             <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between gap-2">
-                <button onclick="deleteCurrentBlock()" id="btn-delete-block" class="px-4 py-2 bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold rounded-xl hover:bg-rose-100 transition-all">
+                <button onclick="confirmDeleteCurrentBlock()" id="btn-delete-block" class="px-4 py-2 bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold rounded-xl hover:bg-rose-100 transition-all">
                     <i class="fa-solid fa-trash mr-1"></i> ลบบล็อกนี้
                 </button>
                 <div class="flex gap-2">
@@ -399,7 +412,7 @@
                     <input type="text" id="edit-doc-url" placeholder="https://drive.google.com/file/d/..." class="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-mono">
                 </div>
                 <div class="pt-4 flex justify-between gap-3">
-                    <button onclick="deleteDocItem()" id="btn-delete-doc" class="bg-rose-50 border border-rose-200 text-rose-600 px-4 py-2 rounded-xl text-xs font-bold">
+                    <button onclick="confirmDeleteDocItem()" id="btn-delete-doc" class="bg-rose-50 border border-rose-200 text-rose-600 px-4 py-2 rounded-xl text-xs font-bold">
                         <i class="fa-solid fa-trash mr-1"></i> ลบเอกสารนี้
                     </button>
                     <div class="flex gap-2">
@@ -508,10 +521,16 @@
     </div>
 
     <script>
+        // =========================================================================
+        // 📌 [ตำแหน่งที่ 2] บรรทัดที่ 428: ลิงก์สำหรับผูก Google Sheets Web API
+        // =========================================================================
+        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec";
+
         let activeStandardId = 1;
         let activeDocumentName = "";
         let activeDocumentUrl = "";
         let localVideoBase64 = "";
+        let pendingConfirmAction = null;
 
         const DEFAULT_DRIVE_LINK = "https://drive.google.com/file/d/1BpyjO5UApn25F6n00DqNEp134S8-Tq1-/view";
 
@@ -553,6 +572,64 @@
         };
 
         let sarData = JSON.parse(JSON.stringify(defaultSarData));
+
+        async function fetchSheetData() {
+            if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
+                console.log("ℹ️ ยังไม่ได้ใส่ GOOGLE_SHEET_API_URL ในหน้าแอดมิน");
+                return;
+            }
+            try {
+                const response = await fetch(GOOGLE_SHEET_API_URL);
+                const data = await response.json();
+                
+                if (data && !data.status) {
+                    sarData = data;
+                    localStorage.setItem("sar_data_config", JSON.stringify(data));
+                    if (activeStandardId !== 4) {
+                        renderStandard(activeStandardId);
+                    }
+                }
+            } catch (error) {
+                console.error("❌ ไม่สามารถดึงข้อมูลจาก Google Sheets ได้:", error);
+            }
+        }
+
+        function showToast(message, isSuccess = true) {
+            const toast = document.getElementById("toast-notification");
+            const toastMsg = document.getElementById("toast-message");
+            const toastIcon = document.getElementById("toast-icon");
+
+            toastMsg.innerText = message;
+            if (isSuccess) {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-lg";
+            } else {
+                toastIcon.className = "fa-solid fa-circle-xmark text-rose-400 text-lg";
+            }
+
+            toast.classList.remove("translate-y-20", "opacity-0", "pointer-events-none");
+            setTimeout(() => {
+                toast.classList.add("translate-y-20", "opacity-0", "pointer-events-none");
+            }, 3000);
+        }
+
+        function showConfirmModal(title, body, onConfirm) {
+            document.getElementById("confirm-modal-title").innerText = title;
+            document.getElementById("confirm-modal-body").innerText = body;
+            pendingConfirmAction = onConfirm;
+            document.getElementById("confirm-delete-modal").classList.remove("hidden");
+
+            document.getElementById("btn-confirm-action").onclick = function() {
+                if (typeof pendingConfirmAction === "function") {
+                    pendingConfirmAction();
+                }
+                closeConfirmModal();
+            };
+        }
+
+        function closeConfirmModal() {
+            document.getElementById("confirm-delete-modal").classList.add("hidden");
+            pendingConfirmAction = null;
+        }
 
         function convertDriveImageUrl(url) {
             if (!url) return "";
@@ -604,7 +681,7 @@
         function saveHeaderSettings() {
             liveUpdateHeader();
             localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
-            alert("🎉 บันทึกการตั้งค่าส่วนหัวและโลโก้สถานศึกษาเรียบร้อยแล้ว!");
+            showToast("🎉 บันทึกการตั้งค่าส่วนหัวเรียบร้อยแล้ว!");
         }
 
         function updateHeaderDOM() {
@@ -782,13 +859,14 @@
             const file = event.target.files[0];
             if (file) {
                 if (file.size > 20 * 1024 * 1024) {
-                    alert("ไฟล์วิดีโอมีขนาดใหญ่เกินไป (กรุณาใช้ไฟล์ขนาดไม่เกิน 20MB)");
+                    showToast("ไฟล์วิดีโอใหญ่เกินไป (ไม่เกิน 20MB)", false);
                     return;
                 }
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     localVideoBase64 = e.target.result;
                     document.getElementById('local-video-status').classList.remove('hidden');
+                    showToast("แนบไฟล์วิดีโอเรียบร้อยแล้ว");
                 };
                 reader.readAsDataURL(file);
             }
@@ -813,7 +891,7 @@
             };
 
             if (!blockData.title) {
-                alert("กรุณากรอกหัวข้อหลักของกล่องข้อความ");
+                showToast("กรุณากรอกหัวข้อหลักของกล่องข้อความ", false);
                 return;
             }
 
@@ -827,16 +905,20 @@
             localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
             closeBlockModal();
             renderWelcomeBlocksListAdmin();
+            showToast("บันทึกข้อมูลบล็อกเรียบร้อยแล้ว");
         }
 
-        function deleteCurrentBlock() {
+        function confirmDeleteCurrentBlock() {
             const idxVal = document.getElementById('edit-block-id').value;
-            if (idxVal !== "" && confirm("คุณครูต้องการลบบล็อกข้อความต้อนรับนี้หรือไม่?")) {
-                const idx = parseInt(idxVal);
-                welcomeBlocks.splice(idx, 1);
-                localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
-                closeBlockModal();
-                renderWelcomeBlocksListAdmin();
+            if (idxVal !== "") {
+                showConfirmModal("ลบบล็อกข้อความต้อนรับ", "คุณแน่ใจหรือไม่ว่าต้องการลบบล็อกข้อความนี้?", function() {
+                    const idx = parseInt(idxVal);
+                    welcomeBlocks.splice(idx, 1);
+                    localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
+                    closeBlockModal();
+                    renderWelcomeBlocksListAdmin();
+                    showToast("ลบบล็อกเรียบร้อยแล้ว");
+                });
             }
         }
 
@@ -932,7 +1014,6 @@
                         </span>
                         
                         <div class="flex items-center gap-1.5 self-end sm:self-auto flex-shrink-0">
-                            <!-- ปุ่มดูเอกสาร -->
                             <button onclick="openDocumentModal(${topicIndex}, ${docIndex})" class="px-3 py-1.5 bg-[#0d9488] hover:bg-[#0f766e] text-white text-xs font-bold rounded-xl shadow-sm transition-all flex items-center gap-1 active:scale-95">
                                 <i class="fa-regular fa-eye text-xs"></i> ดูเอกสาร
                             </button>
@@ -953,7 +1034,7 @@
                             <button onclick="openAddDocModal(${topicIndex})" class="px-3 py-1.5 bg-[#0d9488] text-white text-xs font-bold rounded-xl shadow-sm hover:bg-[#0f766e] transition-all">
                                 <i class="fa-solid fa-plus mr-1"></i> เพิ่มไฟล์
                             </button>
-                            <button onclick="deleteTopicItem(${topicIndex})" class="p-1.5 text-slate-400 hover:text-rose-500 rounded-xl transition-all">
+                            <button onclick="confirmDeleteTopicItem(${topicIndex})" class="p-1.5 text-slate-400 hover:text-rose-500 rounded-xl transition-all">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </div>
@@ -1010,7 +1091,7 @@
             const urlVal = document.getElementById('edit-doc-url').value.trim();
 
             if (!nameVal) {
-                alert("กรุณากรอกชื่อเอกสาร");
+                showToast("กรุณากรอกชื่อเอกสาร", false);
                 return;
             }
 
@@ -1027,18 +1108,21 @@
             localStorage.setItem("sar_data_config", JSON.stringify(sarData));
             closeEditDocModal();
             renderStandard(activeStandardId);
+            showToast("บันทึกข้อมูลเอกสารเรียบร้อยแล้ว");
         }
 
-        function deleteDocItem() {
+        function confirmDeleteDocItem() {
             const topicIdx = parseInt(document.getElementById('edit-doc-topic-idx').value);
             const docIdx = parseInt(document.getElementById('edit-doc-doc-idx').value);
-            if (confirm("คุณครูต้องการลบไฟล์เอกสารนี้หรือไม่?")) {
+            
+            showConfirmModal("ลบไฟล์เอกสาร", "คุณแน่ใจหรือไม่ว่าต้องการลบไฟล์เอกสารนี้?", function() {
                 const key = String(activeStandardId);
                 sarData[key][topicIdx].documents.splice(docIdx, 1);
                 localStorage.setItem("sar_data_config", JSON.stringify(sarData));
                 closeEditDocModal();
                 renderStandard(activeStandardId);
-            }
+                showToast("ลบเอกสารเรียบร้อยแล้ว");
+            });
         }
 
         function openAddTopicModal() {
@@ -1049,16 +1133,18 @@
                 sarData[key].push({ title: topicTitle.trim(), documents: [] });
                 localStorage.setItem("sar_data_config", JSON.stringify(sarData));
                 renderStandard(activeStandardId);
+                showToast("เพิ่มประเด็นพิจารณาใหม่เรียบร้อยแล้ว");
             }
         }
 
-        function deleteTopicItem(topicIdx) {
-            if (confirm("ยืนยันการลบประเด็นพิจารณานี้พร้อมเอกสารย่อยข้างในทั้งหมด?")) {
+        function confirmDeleteTopicItem(topicIdx) {
+            showConfirmModal("ลบประเด็นพิจารณา", "คุณแน่ใจหรือไม่ว่าต้องการลบประเด็นพิจารณานี้พร้อมเอกสารย่อยทั้งหมด?", function() {
                 const key = String(activeStandardId);
                 sarData[key].splice(topicIdx, 1);
                 localStorage.setItem("sar_data_config", JSON.stringify(sarData));
                 renderStandard(activeStandardId);
-            }
+                showToast("ลบประเด็นพิจารณาเรียบร้อยแล้ว");
+            });
         }
 
         function openDocumentModal(topicIdx, docIdx) {
@@ -1130,6 +1216,7 @@
         window.onload = function() {
             loadSarData();
             loadHeaderSettings();
+            fetchSheetData();
             switchTab(1);
         };
     </script>
