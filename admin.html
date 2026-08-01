@@ -65,7 +65,6 @@
         </div>
     </div>
 
-    <!-- Main Container Wrapper -->
     <div class="flex-grow">
         <header class="py-5 px-4 relative overflow-hidden bg-gradient-to-b from-[#f0fdf4] to-[#fcfcf9]">
             <div class="max-w-4xl mx-auto">
@@ -291,7 +290,6 @@
         </main>
     </div>
 
-    <!-- Fixed Sticky Footer -->
     <footer class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-[#ecfccb] via-[#fef9c3] to-[#ccfbf1] border-t-4 border-[#84cc16] py-3 px-6 text-center shadow-lg backdrop-blur-md">
         <div class="max-w-4xl mx-auto space-y-0.5">
             <p class="text-xs md:text-sm font-extrabold text-[#365314]">
@@ -668,7 +666,7 @@
                     }
 
                     if (data.headerSettings) {
-                        headerSettings = data.headerSettings;
+                        headerSettings = Object.assign(headerSettings, data.headerSettings);
                         localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
                     }
 
@@ -694,8 +692,32 @@
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
-                document.getElementById('builder-school-logo').value = e.target.result;
-                liveUpdateHeader();
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 200;
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > height) {
+                        if (width > maxDim) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        }
+                    } else {
+                        if (height > maxDim) {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const resizedBase64 = canvas.toDataURL('image/png');
+                    document.getElementById('builder-school-logo').value = resizedBase64;
+                    liveUpdateHeader();
+                };
+                img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         }
@@ -799,7 +821,7 @@
             }
 
             document.getElementById('builder-school-name').value = headerSettings.schoolName || "";
-            document.getElementById('builder-school-logo').value = headerSettings.schoolLogo || "";
+            document.getElementById('builder-school-logo').value = convertDriveImageUrl(headerSettings.schoolLogo) || "";
             document.getElementById('builder-header-title').value = headerSettings.headerTitle || "";
             document.getElementById('builder-header-subtitle').value = headerSettings.headerSubtitle || "";
 
@@ -808,7 +830,14 @@
 
         function liveUpdateHeader() {
             headerSettings.schoolName = document.getElementById('builder-school-name').value.trim();
-            headerSettings.schoolLogo = document.getElementById('builder-school-logo').value.trim();
+            
+            const rawLogoInput = document.getElementById('builder-school-logo').value.trim();
+            const convertedLogo = convertDriveImageUrl(rawLogoInput);
+            if (convertedLogo && convertedLogo !== rawLogoInput) {
+                document.getElementById('builder-school-logo').value = convertedLogo;
+            }
+            headerSettings.schoolLogo = convertedLogo || rawLogoInput;
+
             headerSettings.headerTitle = document.getElementById('builder-header-title').value.trim();
             headerSettings.headerSubtitle = document.getElementById('builder-header-subtitle').value.trim();
 
@@ -821,7 +850,6 @@
             const logoFallback = document.getElementById("logo-icon-fallback");
 
             if (logoImg && logoFallback) {
-                const convertedLogo = convertDriveImageUrl(headerSettings.schoolLogo);
                 if (convertedLogo && convertedLogo.trim() !== "") {
                     logoImg.src = convertedLogo;
                     logoImg.classList.remove("hidden");
@@ -1047,7 +1075,6 @@
                                 const hasUrl = doc && doc.url && typeof doc.url === 'string' && doc.url.trim() !== "";
                                 const hasImages = doc && Array.isArray(doc.images) && doc.images.length > 0;
 
-                                // Counted as complete (100%) if it has a file URL OR attached evidence images!
                                 if (hasUrl || hasImages) {
                                     uploadedDocsCount++;
                                     mCount[key].uploaded++;
@@ -1323,7 +1350,6 @@
             });
         }
 
-        // Initialize Admin Dashboard
         window.onload = function() {
             const savedHeader = localStorage.getItem("site_header_config");
             if (savedHeader) {
