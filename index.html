@@ -40,7 +40,6 @@
 </head>
 <body class="bg-[#fcfcf9] text-[#1e2e22] min-h-screen flex flex-col justify-between pb-16 relative">
 
-    <!-- Main Container Wrapper -->
     <div class="flex-grow">
         <header class="py-5 px-4 relative overflow-hidden bg-gradient-to-b from-[#f0fdf4] to-[#fcfcf9]">
             <div class="max-w-4xl mx-auto">
@@ -112,7 +111,6 @@
         </main>
     </div>
 
-    <!-- Fixed Sticky Footer -->
     <footer class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-[#ecfccb] via-[#fef9c3] to-[#ccfbf1] border-t-4 border-[#84cc16] py-3 px-6 text-center shadow-lg backdrop-blur-md">
         <div class="max-w-4xl mx-auto space-y-0.5">
             <p class="text-xs md:text-sm font-extrabold text-[#365314]">
@@ -400,7 +398,6 @@
                     ${block.body ? `<p class="text-xs md:text-sm font-medium leading-relaxed opacity-90 whitespace-pre-line">${block.body}</p>` : ''}
                 `;
 
-                // Handle Multiple or Single Images
                 let imagesList = [];
                 if (Array.isArray(block.images) && block.images.length > 0) {
                     imagesList = block.images;
@@ -419,7 +416,6 @@
                             </div>
                         `;
                     } else {
-                        // Multi-image gallery layout (2-column)
                         let galleryHtml = `<div class="grid grid-cols-2 gap-2.5 pt-1">`;
                         imagesList.forEach((imgUrl, imgIdx) => {
                             galleryHtml += `
@@ -710,7 +706,6 @@
             }
         }
 
-        // Keyboard Event Listener (ESC, Left, Right Arrow)
         document.addEventListener('keydown', function(event) {
             const lightbox = document.getElementById('lightbox-modal');
             const isLightboxOpen = lightbox && !lightbox.classList.contains('hidden');
@@ -728,7 +723,6 @@
             }
         });
 
-        // Initialize Application
         window.onload = function() {
             const savedHeader = localStorage.getItem("site_header_config");
             if (savedHeader) {
