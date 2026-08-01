@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบการประเมินคุณภาพภายนอก สมศ. รอบห้า | โรงเรียนปากชมวิทยา</title>
-    <!-- Tailwind CSS CDN -->
+    <title>ระบบการประเมินคุณภาพภายนอก สมศ. รอบ 5 | โรงเรียนปากชมวิทยา</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Sarabun', sans-serif; background-color: #fcfcf9; }
         .sticker-card { box-shadow: 0 0 0 4px #ffffff, 0 10px 25px rgba(22, 101, 52, 0.08); }
 
-        /* Smooth border transition on hover */
         .tab-btn {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -41,28 +38,29 @@
         }
     </script>
 </head>
-<body class="bg-[#fcfcf9] text-[#1e2e22] min-h-screen flex flex-col justify-between">
+<body class="bg-[#fcfcf9] text-[#1e2e22] min-h-screen flex flex-col justify-between pb-16 relative">
 
-    <div>
-        <header class="py-10 px-4 relative overflow-hidden bg-gradient-to-b from-[#f0fdf4] to-[#fcfcf9]">
+    <!-- Main Container Wrapper -->
+    <div class="flex-grow">
+        <header class="py-5 px-4 relative overflow-hidden bg-gradient-to-b from-[#f0fdf4] to-[#fcfcf9]">
             <div class="max-w-4xl mx-auto">
-                <div class="bg-gradient-to-br from-[#166534] via-[#15803d] to-[#14532d] rounded-3xl p-6 md:p-8 border-l-8 border-[#84cc16] border-t-2 border-r-2 border-b-2 border-[#a3e635] sticker-card shadow-lg text-center relative text-white">
-                    <div id="header-badge-icon" class="w-24 h-24 mx-auto bg-white rounded-full border-4 border-[#84cc16] shadow-md flex items-center justify-center mb-4 transition-transform hover:rotate-6 duration-300 overflow-hidden p-1">
+                <div class="bg-gradient-to-br from-[#166534] via-[#15803d] to-[#14532d] rounded-3xl p-5 md:p-6 border-l-8 border-[#84cc16] sticker-card shadow-lg text-center relative text-white">
+                    <div id="header-badge-icon" class="w-20 h-20 mx-auto bg-white rounded-full border-4 border-[#84cc16] shadow-md flex items-center justify-center mb-3 transition-transform hover:rotate-6 duration-300 overflow-hidden p-1">
                         <img id="logo-image-display" src="" class="w-full h-full object-contain rounded-full hidden" onerror="showLogoFallback()">
                         <div id="logo-icon-fallback" class="flex items-center justify-center w-full h-full">
-                            <i class="fa-solid fa-graduation-cap text-[#166534] text-4xl"></i>
+                            <i class="fa-solid fa-graduation-cap text-[#166534] text-3xl"></i>
                         </div>
                     </div>
                     
-                    <h1 id="header-title-display" class="text-2xl md:text-3xl font-extrabold text-white tracking-wide mb-2 drop-shadow-sm">
-                        ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)
+                    <h1 id="header-title-display" class="text-xl md:text-2xl font-extrabold text-white tracking-wide mb-1 drop-shadow-sm">
+                        ระบบการประเมินคุณภาพภายนอก สมศ. รอบ 5
                     </h1>
-                    <p id="header-subtitle-display" class="text-xs md:text-sm text-emerald-100 font-bold mb-5">
+                    <p id="header-subtitle-display" class="text-xs md:text-sm text-emerald-100 font-bold mb-3">
                         ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล
                     </p>
 
                     <div class="inline-block relative">
-                        <div class="bg-white/95 px-6 py-2 rounded-full border-2 border-[#84cc16] shadow-sm font-extrabold text-[#15803d] text-sm md:text-base flex items-center justify-center gap-2">
+                        <div class="bg-white/95 px-5 py-1.5 rounded-full border-2 border-[#84cc16] shadow-sm font-extrabold text-[#15803d] text-xs md:text-sm flex items-center justify-center gap-2">
                             <span id="school-name-text">โรงเรียนปากชมวิทยา</span>
                         </div>
                     </div>
@@ -70,51 +68,53 @@
             </div>
         </header>
 
-        <section id="welcome-blocks-container" class="max-w-4xl mx-auto px-4 mt-4 space-y-4">
+        <section id="welcome-blocks-container" class="max-w-4xl mx-auto px-4 mt-2 space-y-3">
         </section>
 
-        <main class="max-w-4xl mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 border-b border-slate-200/60 pb-6">
-                <!-- Standard 1 Card Tab (Royal Purple Theme) -->
-                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn p-4 rounded-2xl bg-white border-l-8 border-[#a855f7] border-t border-r border-b border-purple-200 shadow-md text-left flex items-center gap-3 hover:border-[#9333ea] hover:bg-[#faf5ff]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-1" class="w-12 h-12 rounded-xl bg-[#a855f7] text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm border border-purple-300">
+        <main class="max-w-4xl mx-auto px-4 py-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5 border-b border-slate-200/60 pb-4">
+                <!-- Standard 1 Card Tab (Purple) -->
+                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#a855f7] border-t border-r border-b border-purple-200 shadow-md text-left flex items-center gap-3 hover:border-[#9333ea] hover:bg-[#faf5ff]/40 hover:shadow-lg">
+                    <div id="tab-icon-box-1" class="w-10 h-10 rounded-xl bg-[#a855f7] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-purple-300">
                         <i class="fa-solid fa-star text-white"></i>
                     </div>
                     <div>
                         <span class="text-[10px] uppercase font-bold text-[#7e22ce] tracking-wider block">คุณภาพผู้เรียน</span>
-                        <h3 id="tab-title-1" class="text-sm md:text-base font-extrabold text-[#581c87]">มาตรฐานที่ 1</h3>
+                        <h3 id="tab-title-1" class="text-xs md:text-sm font-extrabold text-[#581c87]">มาตรฐานที่ 1</h3>
                     </div>
                 </button>
 
-                <!-- Standard 2 Card Tab (Amber Gold Theme) -->
-                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn p-4 rounded-2xl bg-white border-l-8 border-[#f59e0b] border-t border-r border-b border-amber-200 shadow-md text-left flex items-center gap-3 hover:border-[#d97706] hover:bg-[#fefce8]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-2" class="w-12 h-12 rounded-xl bg-[#f59e0b] text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm border border-amber-300">
+                <!-- Standard 2 Card Tab (Amber Gold) -->
+                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#f59e0b] border-t border-r border-b border-amber-200 shadow-md text-left flex items-center gap-3 hover:border-[#d97706] hover:bg-[#fefce8]/40 hover:shadow-lg">
+                    <div id="tab-icon-box-2" class="w-10 h-10 rounded-xl bg-[#f59e0b] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-amber-300">
                         <i class="fa-solid fa-folder-open text-white"></i>
                     </div>
                     <div>
                         <span class="text-[10px] uppercase font-bold text-[#b45309] tracking-wider block">การบริหารจัดการ</span>
-                        <h3 id="tab-title-2" class="text-sm md:text-base font-extrabold text-[#713f12]">มาตรฐานที่ 2</h3>
+                        <h3 id="tab-title-2" class="text-xs md:text-sm font-extrabold text-[#713f12]">มาตรฐานที่ 2</h3>
                     </div>
                 </button>
 
-                <!-- Standard 3 Card Tab (Mint Teal Theme) -->
-                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn p-4 rounded-2xl bg-white border-l-8 border-[#14b8a6] border-t border-r border-b border-teal-200 shadow-md text-left flex items-center gap-3 hover:border-[#0d9488] hover:bg-[#f0fdfa]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-3" class="w-12 h-12 rounded-xl bg-[#14b8a6] text-white flex items-center justify-center text-lg flex-shrink-0 shadow-sm border border-teal-300">
+                <!-- Standard 3 Card Tab (Mint Teal) -->
+                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#14b8a6] border-t border-r border-b border-teal-200 shadow-md text-left flex items-center gap-3 hover:border-[#0d9488] hover:bg-[#f0fdfa]/40 hover:shadow-lg">
+                    <div id="tab-icon-box-3" class="w-10 h-10 rounded-xl bg-[#14b8a6] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-teal-300">
                         <i class="fa-solid fa-chalkboard-user text-white"></i>
                     </div>
                     <div>
                         <span class="text-[10px] uppercase font-bold text-[#0f766e] tracking-wider block">การจัดประสบการณ์</span>
-                        <h3 id="tab-title-3" class="text-sm md:text-base font-extrabold text-[#134e4a]">มาตรฐานที่ 3</h3>
+                        <h3 id="tab-title-3" class="text-xs md:text-sm font-extrabold text-[#134e4a]">มาตรฐานที่ 3</h3>
                     </div>
                 </button>
             </div>
 
-            <div id="accordion-container" class="space-y-4"></div>
+            <!-- Accordion Items Container -->
+            <div id="accordion-container" class="space-y-3"></div>
         </main>
     </div>
 
-    <footer class="bg-gradient-to-r from-[#ecfccb] via-[#fef9c3] to-[#ccfbf1] border-t-4 border-[#84cc16] py-8 px-6 text-center shadow-inner mt-12">
-        <div class="max-w-4xl mx-auto space-y-2">
+    <!-- Fixed Sticky Footer -->
+    <footer class="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-[#ecfccb] via-[#fef9c3] to-[#ccfbf1] border-t-4 border-[#84cc16] py-3 px-6 text-center shadow-lg backdrop-blur-md">
+        <div class="max-w-4xl mx-auto space-y-0.5">
             <p class="text-xs md:text-sm font-extrabold text-[#365314]">
                 Copyright © 2026 All Rights Reserved. e-SAR : Electronic Self-Assessment Report. <span id="footer-school-name">โรงเรียนปากชมวิทยา</span>
             </p>
@@ -125,37 +125,29 @@
         <div id="modal-container-box" onclick="event.stopPropagation()" class="bg-white rounded-3xl w-full max-w-4xl overflow-hidden border-4 border-[#84cc16] sticker-card flex flex-col h-[90vh] transition-all">
             <div class="bg-gradient-to-r from-[#166534] to-[#0d9488] p-4 md:p-5 text-white flex justify-between items-center flex-shrink-0">
                 <div class="truncate mr-2">
-                    <h3 id="modal-doc-title" class="font-extrabold text-sm md:text-lg truncate">ชื่อเอกสารหลักฐาน</h3>
-                    <p id="modal-topic-title" class="text-[10px] md:text-xs text-emerald-100 truncate mt-0.5">ประเด็นพิจารณา</p>
+                    <h3 id="modal-topic-title" class="font-extrabold text-sm md:text-lg truncate">ประเด็นพิจารณา</h3>
+                    <p id="modal-doc-count-subtitle" class="text-[10px] md:text-xs text-emerald-100 truncate mt-0.5">รายการเอกสารหลักฐาน</p>
                 </div>
                 <div class="flex items-center gap-2 flex-shrink-0">
-                    <button onclick="toggleLandscapeView()" id="btn-toggle-landscape" class="px-3 py-1.5 bg-white/20 hover:bg-white/30 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1">
-                        <i class="fa-solid fa-expand"></i> <span class="hidden sm:inline">📐 ขยายแนวนอน (Landscape)</span>
+                    <button onclick="toggleLandscapeView()" id="btn-toggle-landscape" class="px-3 py-1.5 bg-white/20 hover:bg-white/30 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5">
+                        <i id="btn-toggle-landscape-icon" class="fa-solid fa-expand"></i> <span id="btn-toggle-landscape-text" class="hidden sm:inline">เอกสารแนวนอน (Landscape)</span>
                     </button>
-                    <a id="modal-external-link" href="#" target="_blank" class="px-3 py-1.5 bg-white text-[#166534] hover:bg-emerald-50 rounded-xl text-xs font-bold transition-all flex items-center gap-1 shadow-sm">
-                        <i class="fa-solid fa-up-right-from-square"></i> <span class="hidden sm:inline">เปิดลิงก์แยก</span>
-                    </a>
                     <button onclick="closePdfModal()" class="text-white/80 hover:text-white transition-colors text-xl p-1">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
             </div>
 
-            <div id="modal-multi-files-selector" class="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center gap-2 overflow-x-auto flex-shrink-0 text-xs">
-                <span class="font-bold text-slate-500 flex-shrink-0"><i class="fa-solid fa-files mr-1"></i> ไฟล์ในหัวข้อนี้:</span>
-                <div id="modal-files-list-chips" class="flex items-center gap-2"></div>
-            </div>
-
-            <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
-                <div class="w-full h-[55vh] min-h-[350px] rounded-2xl overflow-hidden border-2 border-[#84cc16] bg-white shadow-inner relative">
-                    <iframe id="pdf-viewer-iframe" class="w-full h-full border-0" src=""></iframe>
-                </div>
+            <!-- Scrollable Body containing stacked preview boxes -->
+            <div id="modal-previews-scroll-body" class="flex-1 overflow-y-auto p-4 space-y-6 bg-slate-50">
+                <div id="modal-documents-stack" class="space-y-6"></div>
 
                 <div id="modal-attached-images-section" class="hidden bg-white p-4 rounded-2xl border-2 border-[#84cc16] space-y-3">
                     <h4 class="text-xs md:text-sm font-extrabold text-slate-800 flex items-center gap-2">
                         <i class="fa-solid fa-images text-[#166534]"></i> รูปภาพหลักฐานเชิงประจักษ์แนบเพิ่มเติม
                     </h4>
-                    <div id="modal-images-gallery" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
+                    <!-- 2 columns layout for attached images -->
+                    <div id="modal-images-gallery" class="grid grid-cols-2 gap-3"></div>
                 </div>
             </div>
 
@@ -167,18 +159,49 @@
         </div>
     </div>
 
+    <div id="lightbox-modal" onclick="handleLightboxBackdropClick(event)" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all">
+        <div onclick="event.stopPropagation()" class="relative max-w-5xl w-full flex flex-col items-center justify-center">
+            <!-- Close Button -->
+            <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-white/80 hover:text-white text-3xl font-bold transition-colors p-2 z-10">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Image Container -->
+            <div class="relative w-full max-h-[80vh] flex items-center justify-center rounded-2xl overflow-hidden bg-black/40">
+                <img id="lightbox-img" src="" class="max-h-[80vh] max-w-full object-contain rounded-xl shadow-2xl transition-all duration-300">
+                
+                <!-- Left Navigation Arrow -->
+                <button id="lightbox-prev-btn" onclick="prevLightboxImage()" class="absolute left-3 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center text-xl transition-all border border-white/20 shadow-lg">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <!-- Right Navigation Arrow -->
+                <button id="lightbox-next-btn" onclick="nextLightboxImage()" class="absolute right-3 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center text-xl transition-all border border-white/20 shadow-lg">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Image Counter Badge -->
+            <div id="lightbox-counter" class="mt-4 px-4 py-1.5 bg-white/20 text-white text-xs md:text-sm font-extrabold rounded-full border border-white/30 backdrop-blur-sm">
+                1 / 1
+            </div>
+        </div>
+    </div>
+
     <script>
         const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwTIoD9LfLqCtMp7E9o4kTYDONctTsXYT4lkQ13D3T8xv6ysmjy0fHdn8Kls-7gGEpA/exec";
 
         let activeStandardId = 1;
         let isLandscapeMode = false;
+        let activeLightboxImages = [];
+        let activeLightboxIndex = 0;
 
         const DEFAULT_DRIVE_LINK = "https://drive.google.com/file/d/1BpyjO5UApn25F6n00DqNEp134S8-Tq1-/view";
 
         let headerSettings = {
             schoolName: "โรงเรียนปากชมวิทยา",
             schoolLogo: "",
-            headerTitle: "ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)",
+            headerTitle: "ระบบการประเมินคุณภาพภายนอก สมศ. รอบ 5",
             headerSubtitle: "ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล"
         };
 
@@ -245,7 +268,6 @@
 
         async function fetchSheetData() {
             if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_APPS_SCRIPT_ID")) {
-                console.log("ℹ️ ยังไม่ได้ตั้งค่า GOOGLE_SHEET_API_URL ใช้ข้อมูลในเครื่อง/ค่าเริ่มต้น");
                 return;
             }
             try {
@@ -255,28 +277,67 @@
                 if (data && data.status === "success") {
                     delete data.status;
 
+                    let updated = false;
+
                     if (data['1'] || data['2'] || data['3']) {
-                        sarData = { '1': data['1'] || [], '2': data['2'] || [], '3': data['3'] || [] };
-                        localStorage.setItem("sar_data_config", JSON.stringify(sarData));
+                        const newSar = { '1': data['1'] || [], '2': data['2'] || [], '3': data['3'] || [] };
+                        if (JSON.stringify(newSar) !== JSON.stringify(sarData)) {
+                            sarData = newSar;
+                            localStorage.setItem("sar_data_config", JSON.stringify(sarData));
+                            updated = true;
+                        }
                     }
 
                     if (data.headerSettings) {
-                        headerSettings = data.headerSettings;
-                        localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
+                        if (JSON.stringify(data.headerSettings) !== JSON.stringify(headerSettings)) {
+                            headerSettings = data.headerSettings;
+                            localStorage.setItem("site_header_config", JSON.stringify(headerSettings));
+                            updated = true;
+                        }
                     }
 
                     if (data.welcomeBlocks) {
-                        welcomeBlocks = data.welcomeBlocks;
-                        localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
+                        if (JSON.stringify(data.welcomeBlocks) !== JSON.stringify(welcomeBlocks)) {
+                            welcomeBlocks = data.welcomeBlocks;
+                            localStorage.setItem("site_welcome_blocks_config", JSON.stringify(welcomeBlocks));
+                            updated = true;
+                        }
                     }
+
+                    if (updated) {
+                        loadHeaderSettings();
+                        renderWelcomeBlocks();
+                        renderStandard(activeStandardId);
+                    }
+                }
+            } catch (error) {
+                console.error("❌ ไม่สามารถดึงข้อมูลจาก Google Sheets ได้:", error);
+            }
+        }
+
+        function setupAutoRefresh() {
+            window.addEventListener("storage", function(event) {
+                if (event.key === "sar_data_config" || event.key === "site_header_config" || event.key === "site_welcome_blocks_config") {
+                    const savedHeader = localStorage.getItem("site_header_config");
+                    if (savedHeader) try { headerSettings = JSON.parse(savedHeader); } catch(e){}
+                    const savedBlocks = localStorage.getItem("site_welcome_blocks_config");
+                    if (savedBlocks) try { welcomeBlocks = JSON.parse(savedBlocks); } catch(e){}
+                    const savedSar = localStorage.getItem("sar_data_config");
+                    if (savedSar) try { sarData = JSON.parse(savedSar); } catch(e){}
 
                     loadHeaderSettings();
                     renderWelcomeBlocks();
                     renderStandard(activeStandardId);
                 }
-            } catch (error) {
-                console.error("❌ ไม่สามารถดึงข้อมูลจาก Google Sheets ได้:", error);
-            }
+            });
+
+            document.addEventListener("visibilitychange", function() {
+                if (document.visibilityState === "visible") {
+                    fetchSheetData();
+                }
+            });
+
+            setInterval(fetchSheetData, 12000);
         }
 
         function loadHeaderSettings() {
@@ -285,7 +346,7 @@
                 try { headerSettings = Object.assign(headerSettings, JSON.parse(savedHeader)); } catch (e) {}
             }
 
-            document.getElementById("header-title-display").textContent = headerSettings.headerTitle || "ระบบประกันคุณภาพภายนอก (สมศ. รอบห้า)";
+            document.getElementById("header-title-display").textContent = headerSettings.headerTitle || "ระบบการประเมินคุณภาพภายนอก สมศ. รอบ 5";
             document.getElementById("header-subtitle-display").textContent = headerSettings.headerSubtitle || "ศูนย์ข้อมูลเอกสารและหลักฐานเชิงประจักษ์ดิจิทัล";
             document.querySelectorAll("#school-name-text, #footer-school-name").forEach(el => el.textContent = headerSettings.schoolName || "โรงเรียนปากชมวิทยา");
 
@@ -324,27 +385,55 @@
             welcomeBlocks.forEach(block => {
                 const blockTheme = block.style || 'lime';
                 const div = document.createElement('div');
-                div.className = `p-6 rounded-3xl border-2 border-white sticker-card block-theme-${blockTheme} space-y-3 transition-all duration-300`;
+                div.className = `p-5 rounded-3xl border-2 border-white sticker-card block-theme-${blockTheme} space-y-2.5 transition-all duration-300`;
 
                 let innerHtml = `
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-2xl bg-white/80 flex items-center justify-center text-lg shadow-sm border border-white">
+                        <div class="w-9 h-9 rounded-2xl bg-white/80 flex items-center justify-center text-base shadow-sm border border-white">
                             <i class="fa-solid ${block.icon || 'fa-bullhorn'}"></i>
                         </div>
                         <div>
                             <span class="text-[10px] uppercase font-extrabold tracking-wider opacity-80">${block.subtitle || 'สารสนเทศ'}</span>
-                            <h3 class="font-extrabold text-sm md:text-base leading-tight">${block.title || ''}</h3>
+                            <h3 class="font-extrabold text-xs md:text-sm leading-tight">${block.title || ''}</h3>
                         </div>
                     </div>
                     ${block.body ? `<p class="text-xs md:text-sm font-medium leading-relaxed opacity-90 whitespace-pre-line">${block.body}</p>` : ''}
                 `;
 
-                if (block.type === 'image' && block.imageUrl) {
-                    innerHtml += `
-                        <div class="rounded-2xl overflow-hidden border border-white/50 max-h-80 bg-black/5 flex items-center justify-center">
-                            <img src="${convertDriveImageUrl(block.imageUrl)}" class="max-h-80 w-auto object-contain rounded-2xl">
-                        </div>
-                    `;
+                // Handle Multiple or Single Images
+                let imagesList = [];
+                if (Array.isArray(block.images) && block.images.length > 0) {
+                    imagesList = block.images;
+                } else if (block.imageUrl) {
+                    imagesList = [block.imageUrl];
+                }
+
+                if (block.type === 'image' && imagesList.length > 0) {
+                    if (imagesList.length === 1) {
+                        innerHtml += `
+                            <div class="rounded-2xl overflow-hidden border border-white/50 max-h-72 bg-black/5 flex items-center justify-center cursor-pointer group relative" onclick='openLightbox(${JSON.stringify(imagesList)}, 0)'>
+                                <img src="${convertDriveImageUrl(imagesList[0])}" class="max-h-72 w-auto object-contain rounded-2xl group-hover:scale-105 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xl">
+                                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // Multi-image gallery layout (2-column)
+                        let galleryHtml = `<div class="grid grid-cols-2 gap-2.5 pt-1">`;
+                        imagesList.forEach((imgUrl, imgIdx) => {
+                            galleryHtml += `
+                                <div class="rounded-xl overflow-hidden border border-white/60 aspect-video bg-black/5 cursor-pointer group relative shadow-sm" onclick='openLightbox(${JSON.stringify(imagesList)}, ${imgIdx})'>
+                                    <img src="${convertDriveImageUrl(imgUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-base">
+                                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        galleryHtml += `</div>`;
+                        innerHtml += galleryHtml;
+                    }
                 } else if (block.type === 'vtr' && block.videoUrl) {
                     let embedUrl = block.videoUrl;
                     if (embedUrl.includes('watch?v=')) {
@@ -359,8 +448,8 @@
 
                 if (block.showBtn && block.btnLabel && block.btnUrl) {
                     innerHtml += `
-                        <div class="pt-2">
-                            <a href="${block.btnUrl}" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-slate-800 rounded-xl text-xs font-bold shadow-md hover:bg-slate-50 transition-all border border-slate-100">
+                        <div class="pt-1">
+                            <a href="${block.btnUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-slate-800 rounded-xl text-xs font-bold shadow-md hover:bg-slate-50 transition-all border border-slate-100">
                                 <span>${block.btnLabel}</span> <i class="fa-solid fa-arrow-right"></i>
                             </a>
                         </div>
@@ -385,9 +474,9 @@
                 const btn = document.getElementById(`tab-btn-${id}`);
                 const cfg = configs[id];
                 if (id === tabId) {
-                    btn.className = `tab-btn p-4 rounded-2xl ${cfg.activeBg} border-l-8 ${cfg.border} border-t border-r border-b shadow-lg text-left flex items-center gap-3 scale-[1.02]`;
+                    btn.className = `tab-btn p-3.5 rounded-2xl ${cfg.activeBg} border-l-8 ${cfg.border} border-t border-r border-b shadow-lg text-left flex items-center gap-3 scale-[1.02]`;
                 } else {
-                    btn.className = `tab-btn p-4 rounded-2xl bg-white border-l-8 ${cfg.border} ${cfg.hoverBorder} border-t border-r border-b border-slate-200 shadow-md text-left flex items-center gap-3 opacity-90 hover:opacity-100 hover:bg-slate-50`;
+                    btn.className = `tab-btn p-3.5 rounded-2xl bg-white border-l-8 ${cfg.border} ${cfg.hoverBorder} border-t border-r border-b border-slate-200 shadow-md text-left flex items-center gap-3 opacity-90 hover:opacity-100 hover:bg-slate-50`;
                 }
             }
 
@@ -421,18 +510,18 @@
             targetData.forEach((item, topicIndex) => {
                 const uniqueId = `std-${standardId}-${topicIndex}`;
                 const itemDiv = document.createElement('div');
-                itemDiv.className = `bg-white border-l-8 ${cfg.borderLeft} border-t border-r border-b border-slate-200 rounded-3xl overflow-hidden sticker-card mb-4 transition-all duration-300`;
+                itemDiv.className = `bg-white border-l-8 ${cfg.borderLeft} border-t border-r border-b border-slate-200 rounded-3xl overflow-hidden sticker-card mb-3 transition-all duration-300`;
                 
                 const docs = Array.isArray(item.documents) ? item.documents : [];
-                const docRows = docs.map((doc, docIndex) => `
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3.5 bg-white border border-slate-100 rounded-2xl gap-2 hover:bg-slate-50/80 transition-colors">
-                        <span class="text-xs md:text-sm text-slate-700 font-bold flex items-center">
-                            <i class="fa-solid fa-file-pdf text-rose-500 mr-2.5 text-base"></i>${doc.name}
-                            ${doc.images && doc.images.length > 0 ? `<span class="ml-2 text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-normal"><i class="fa-solid fa-images mr-1"></i>${doc.images.length} รูป</span>` : ''}
+                const docRows = docs.map((doc) => `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-white border border-slate-100 rounded-2xl gap-2 hover:bg-slate-50/80 transition-colors">
+                        <span class="text-xs md:text-sm text-slate-700 font-bold flex items-center flex-wrap gap-1">
+                            <i class="fa-solid fa-file-pdf text-rose-500 mr-1.5 text-base"></i>${doc.name}
+                            ${doc.images && doc.images.length > 0 ? `<span class="ml-1 text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md font-normal"><i class="fa-solid fa-images mr-1"></i>${doc.images.length} รูป</span>` : ''}
                         </span>
                         
                         <div class="flex items-center gap-2 self-end sm:self-auto flex-shrink-0">
-                            <button onclick="openPdfModal('${standardId}', ${topicIndex}, ${docIndex})" class="px-4 py-2 ${cfg.btnBg} text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1.5">
+                            <button onclick="openPdfModal('${standardId}', ${topicIndex})" class="px-3.5 py-1.5 ${cfg.btnBg} text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1.5">
                                 <i class="fa-solid fa-eye"></i> เปิดดูเอกสาร
                             </button>
                         </div>
@@ -440,14 +529,14 @@
                 `).join('');
 
                 itemDiv.innerHTML = `
-                    <div class="w-full flex justify-between items-center p-5 font-bold text-slate-800 ${cfg.headerBg} cursor-pointer border-b border-emerald-100" onclick="toggleAccordion('${uniqueId}')">
+                    <div class="w-full flex justify-between items-center p-4 font-bold text-slate-800 ${cfg.headerBg} cursor-pointer border-b border-emerald-100" onclick="toggleAccordion('${uniqueId}')">
                         <div class="flex items-center gap-3">
                             <i id="icon-${uniqueId}" class="fa-solid fa-chevron-down ${cfg.iconColor} bg-white p-2 rounded-full text-xs border-2 ${cfg.iconBorder} transition-transform"></i>
                             <span class="text-xs md:text-sm text-slate-800 font-extrabold">${item.title}</span>
                         </div>
                         <span class="text-[11px] ${cfg.badgeBg} font-bold px-3 py-1 rounded-full border">${docs.length} รายการ</span>
                     </div>
-                    <div id="content-${uniqueId}" class="hidden border-t border-emerald-200/80 bg-[#f8fafc] p-5 space-y-2.5">
+                    <div id="content-${uniqueId}" class="hidden border-t border-emerald-200/80 bg-[#f8fafc] p-4 space-y-2">
                         ${docs.length > 0 ? docRows : '<p class="text-xs text-slate-400 font-bold text-center py-2">ยังไม่มีไฟล์เอกสารในกลุ่มหัวข้อนี้</p>'}
                     </div>
                 `;
@@ -455,50 +544,100 @@
             });
         }
 
-        function openPdfModal(standardId, topicIndex, selectedDocIndex = 0) {
+        function setPortraitMode() {
+            isLandscapeMode = false;
+            const box = document.getElementById('modal-container-box');
+            const btnText = document.getElementById('btn-toggle-landscape-text');
+            const btnIcon = document.getElementById('btn-toggle-landscape-icon');
+            
+            if (box) {
+                box.classList.remove('max-w-7xl');
+                box.classList.add('max-w-4xl');
+            }
+            if (btnText) btnText.textContent = "เอกสารแนวนอน (Landscape)";
+            if (btnIcon) btnIcon.className = "fa-solid fa-expand";
+        }
+
+        function toggleLandscapeView() {
+            isLandscapeMode = !isLandscapeMode;
+            const box = document.getElementById('modal-container-box');
+            const btnText = document.getElementById('btn-toggle-landscape-text');
+            const btnIcon = document.getElementById('btn-toggle-landscape-icon');
+
+            if (isLandscapeMode) {
+                box.classList.remove('max-w-4xl');
+                box.classList.add('max-w-7xl');
+                if (btnText) btnText.textContent = "เอกสารแนวตั้ง (Portrait)";
+                if (btnIcon) btnIcon.className = "fa-solid fa-compress";
+            } else {
+                box.classList.remove('max-w-7xl');
+                box.classList.add('max-w-4xl');
+                if (btnText) btnText.textContent = "เอกสารแนวนอน (Landscape)";
+                if (btnIcon) btnIcon.className = "fa-solid fa-expand";
+            }
+        }
+
+        function openPdfModal(standardId, topicIndex) {
+            setPortraitMode();
+
             const key = String(standardId);
             const topic = sarData[key][topicIndex];
             if (!topic || !topic.documents) return;
 
             const docs = topic.documents;
-            const currentDoc = docs[selectedDocIndex] || docs[0];
-
             document.getElementById('modal-topic-title').textContent = topic.title || "ประเด็นพิจารณา";
-            document.getElementById('modal-doc-title').textContent = currentDoc.name || "เอกสารหลักฐาน";
+            document.getElementById('modal-doc-count-subtitle').textContent = `จำนวนเอกสารทั้งหมด ${docs.length} รายการ`;
 
-            const iframe = document.getElementById('pdf-viewer-iframe');
-            const previewUrl = convertDrivePreviewUrl(currentDoc.url);
-            iframe.src = previewUrl || "about:blank";
+            const stackContainer = document.getElementById('modal-documents-stack');
+            stackContainer.innerHTML = "";
 
-            document.getElementById('modal-external-link').href = currentDoc.url || "#";
+            let allAttachedImages = [];
 
-            const chipsContainer = document.getElementById('modal-files-list-chips');
-            chipsContainer.innerHTML = "";
-            if (docs.length > 1) {
-                document.getElementById('modal-multi-files-selector').classList.remove('hidden');
-                docs.forEach((d, idx) => {
-                    const btn = document.createElement('button');
-                    btn.className = `px-3 py-1 rounded-lg text-xs font-bold transition-all truncate max-w-[180px] ${idx === selectedDocIndex ? 'bg-[#166534] text-white' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`;
-                    btn.innerHTML = `<i class="fa-solid fa-file-lines mr-1"></i>${d.name}`;
-                    btn.onclick = () => openPdfModal(standardId, topicIndex, idx);
-                    chipsContainer.appendChild(btn);
-                });
-            } else {
-                document.getElementById('modal-multi-files-selector').classList.add('hidden');
-            }
+            docs.forEach((doc, idx) => {
+                const previewUrl = convertDrivePreviewUrl(doc.url);
+                const docCard = document.createElement('div');
+                docCard.className = "bg-white p-4 rounded-2xl border-2 border-[#84cc16] shadow-sm space-y-3";
+
+                docCard.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                        <h4 class="font-bold text-xs md:text-sm text-slate-800 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-[#166534] text-white flex items-center justify-center text-[10px] font-extrabold">${idx + 1}</span>
+                            ${doc.name || 'เอกสารหลักฐาน'}
+                        </h4>
+                        <a href="${doc.url || '#'}" target="_blank" class="px-3 py-1 bg-emerald-50 text-[#166534] hover:bg-emerald-100 rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+                            <i class="fa-solid fa-up-right-from-square"></i> เปิดลิงก์แยก
+                        </a>
+                    </div>
+                    <div class="w-full h-[50vh] min-h-[350px] rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner">
+                        <iframe class="w-full h-full border-0" src="${previewUrl || 'about:blank'}"></iframe>
+                    </div>
+                `;
+                stackContainer.appendChild(docCard);
+
+                if (doc.images && Array.isArray(doc.images)) {
+                    doc.images.forEach(img => {
+                        if (img) allAttachedImages.push(img);
+                    });
+                }
+            });
 
             const imgSection = document.getElementById('modal-attached-images-section');
             const imgGallery = document.getElementById('modal-images-gallery');
             imgGallery.innerHTML = "";
 
-            if (currentDoc.images && Array.isArray(currentDoc.images) && currentDoc.images.length > 0) {
+            if (allAttachedImages.length > 0) {
                 imgSection.classList.remove('hidden');
-                currentDoc.images.forEach(imgUrl => {
-                    const imgDiv = document.createElement('a');
-                    imgDiv.href = convertDriveImageUrl(imgUrl);
-                    imgDiv.target = "_blank";
-                    imgDiv.className = "rounded-xl overflow-hidden border border-slate-200 aspect-video bg-slate-100 block group shadow-sm";
-                    imgDiv.innerHTML = `<img src="${convertDriveImageUrl(imgUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">`;
+                allAttachedImages.forEach((imgUrl, imgIndex) => {
+                    const imgDiv = document.createElement('div');
+                    imgDiv.className = "rounded-xl overflow-hidden border border-slate-200 aspect-video bg-slate-100 cursor-pointer group shadow-sm hover:border-[#166534] transition-all relative";
+                    imgDiv.onclick = () => openLightbox(allAttachedImages, imgIndex);
+
+                    imgDiv.innerHTML = `
+                        <img src="${convertDriveImageUrl(imgUrl)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-lg">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                    `;
                     imgGallery.appendChild(imgDiv);
                 });
             } else {
@@ -509,7 +648,7 @@
         }
 
         function closePdfModal() {
-            document.getElementById('pdf-viewer-iframe').src = "about:blank";
+            document.getElementById('modal-documents-stack').innerHTML = "";
             document.getElementById('pdf-viewer-modal').classList.add('hidden');
         }
 
@@ -519,25 +658,77 @@
             }
         }
 
-        function toggleLandscapeView() {
-            const box = document.getElementById('modal-container-box');
-            isLandscapeMode = !isLandscapeMode;
-            if (isLandscapeMode) {
-                box.classList.remove('max-w-4xl');
-                box.classList.add('max-w-7xl', 'w-full');
+        function openLightbox(imagesArray, index) {
+            activeLightboxImages = imagesArray;
+            activeLightboxIndex = index;
+            updateLightboxUI();
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function updateLightboxUI() {
+            const imgEl = document.getElementById('lightbox-img');
+            const counterEl = document.getElementById('lightbox-counter');
+            const prevBtn = document.getElementById('lightbox-prev-btn');
+            const nextBtn = document.getElementById('lightbox-next-btn');
+
+            if (!activeLightboxImages || activeLightboxImages.length === 0) return;
+
+            imgEl.src = convertDriveImageUrl(activeLightboxImages[activeLightboxIndex]);
+            counterEl.textContent = `${activeLightboxIndex + 1} / ${activeLightboxImages.length}`;
+
+            if (activeLightboxImages.length > 1) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
             } else {
-                box.classList.remove('max-w-7xl');
-                box.classList.add('max-w-4xl');
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
             }
         }
 
-        // Global Keyboard Event Listener for Escape key
+        function prevLightboxImage() {
+            if (activeLightboxImages.length <= 1) return;
+            activeLightboxIndex = (activeLightboxIndex - 1 + activeLightboxImages.length) % activeLightboxImages.length;
+            updateLightboxUI();
+        }
+
+        function nextLightboxImage() {
+            if (activeLightboxImages.length <= 1) return;
+            activeLightboxIndex = (activeLightboxIndex + 1) % activeLightboxImages.length;
+            updateLightboxUI();
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            if (modal) modal.classList.add('hidden');
+            activeLightboxImages = [];
+            activeLightboxIndex = 0;
+        }
+
+        function handleLightboxBackdropClick(event) {
+            if (event.target.id === 'lightbox-modal') {
+                closeLightbox();
+            }
+        }
+
+        // Keyboard Event Listener (ESC, Left, Right Arrow)
         document.addEventListener('keydown', function(event) {
+            const lightbox = document.getElementById('lightbox-modal');
+            const isLightboxOpen = lightbox && !lightbox.classList.contains('hidden');
+
             if (event.key === 'Escape') {
-                closePdfModal();
+                if (isLightboxOpen) {
+                    closeLightbox();
+                } else {
+                    closePdfModal();
+                }
+            } else if (event.key === 'ArrowLeft' && isLightboxOpen) {
+                prevLightboxImage();
+            } else if (event.key === 'ArrowRight' && isLightboxOpen) {
+                nextLightboxImage();
             }
         });
 
+        // Initialize Application
         window.onload = function() {
             const savedHeader = localStorage.getItem("site_header_config");
             if (savedHeader) {
@@ -552,6 +743,7 @@
             loadHeaderSettings();
             renderWelcomeBlocks();
             fetchSheetData();
+            setupAutoRefresh();
             switchTab(1);
         };
     </script>
