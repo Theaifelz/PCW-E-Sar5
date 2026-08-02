@@ -11,11 +11,31 @@
         body { font-family: 'Sarabun', sans-serif; background-color: #fcfcf9; }
         .sticker-card { box-shadow: 0 0 0 4px #ffffff, 0 10px 25px rgba(22, 101, 52, 0.08); }
 
-        .tab-btn {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        @keyframes cardFadeIn {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* 10 Pastel Theme Styles for Welcome Blocks */
+        .animate-card-fade {
+            animation: cardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Elastic Zoom Pop Animation (Style 4: scale 1.03 on hover) */
+        .tab-btn {
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .tab-btn:hover {
+            transform: scale(1.03) !important;
+        }
+
+        .accordion-card-hover {
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .accordion-card-hover:hover {
+            transform: scale(1.03);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        }
+
         .block-theme-lime { background: linear-gradient(135deg, #f7fee7, #ecfccb); border-color: #84cc16; color: #275214; }
         .block-theme-gold { background: linear-gradient(135deg, #fefce8, #fef9c3); border-color: #f59e0b; color: #713f12; }
         .block-theme-teal { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border-color: #14b8a6; color: #134e4a; }
@@ -38,7 +58,7 @@
         }
     </script>
 </head>
-<body class="bg-[#fcfcf9] text-[#1e2e22] min-h-screen flex flex-col justify-between pb-16 relative">
+<body class="bg-[#fcfcf9] text-[#1e2e22] min-h-screen flex flex-col justify-between pb-20 relative">
 
     <div class="flex-grow">
         <header class="py-5 px-4 relative overflow-hidden bg-gradient-to-b from-[#f0fdf4] to-[#fcfcf9]">
@@ -72,10 +92,10 @@
 
         <main class="max-w-4xl mx-auto px-4 py-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5 border-b border-slate-200/60 pb-4">
-                <!-- Standard 1 Card Tab (Purple) -->
-                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#a855f7] border-t border-r border-b border-purple-200 shadow-md text-left flex items-center gap-3 hover:border-[#9333ea] hover:bg-[#faf5ff]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-1" class="w-10 h-10 rounded-xl bg-[#a855f7] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-purple-300">
-                        <i class="fa-solid fa-star text-white"></i>
+                <!-- Standard 1 Card Tab (Purple with Hover Color-Flip & Elastic Zoom Pop) -->
+                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn group p-3.5 rounded-2xl bg-white border-l-8 border-[#a855f7] border-t border-r border-b border-purple-200 shadow-md text-left flex items-center gap-3 hover:border-[#9333ea] hover:bg-[#faf5ff]/40 hover:shadow-lg transition-all duration-300">
+                    <div id="tab-icon-box-1" class="w-10 h-10 rounded-xl bg-[#a855f7] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-purple-300 group-hover:bg-white group-hover:text-[#a855f7] group-hover:border-[#a855f7] transition-all duration-300">
+                        <i class="fa-solid fa-star"></i>
                     </div>
                     <div>
                         <span class="text-[10px] uppercase font-bold text-[#7e22ce] tracking-wider block">คุณภาพผู้เรียน</span>
@@ -83,10 +103,10 @@
                     </div>
                 </button>
 
-                <!-- Standard 2 Card Tab (Amber Gold) -->
-                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#f59e0b] border-t border-r border-b border-amber-200 shadow-md text-left flex items-center gap-3 hover:border-[#d97706] hover:bg-[#fefce8]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-2" class="w-10 h-10 rounded-xl bg-[#f59e0b] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-amber-300">
-                        <i class="fa-solid fa-folder-open text-white"></i>
+                <!-- Standard 2 Card Tab (Amber Gold with Hover Color-Flip & Elastic Zoom Pop) -->
+                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn group p-3.5 rounded-2xl bg-white border-l-8 border-[#f59e0b] border-t border-r border-b border-amber-200 shadow-md text-left flex items-center gap-3 hover:border-[#d97706] hover:bg-[#fefce8]/40 hover:shadow-lg transition-all duration-300">
+                    <div id="tab-icon-box-2" class="w-10 h-10 rounded-xl bg-[#f59e0b] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-amber-300 group-hover:bg-white group-hover:text-[#f59e0b] group-hover:border-[#f59e0b] transition-all duration-300">
+                        <i class="fa-solid fa-folder-open"></i>
                     </div>
                     <div>
                         <span class="text-[10px] uppercase font-bold text-[#b45309] tracking-wider block">การบริหารจัดการ</span>
@@ -94,10 +114,10 @@
                     </div>
                 </button>
 
-                <!-- Standard 3 Card Tab (Mint Teal) -->
-                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#14b8a6] border-t border-r border-b border-teal-200 shadow-md text-left flex items-center gap-3 hover:border-[#0d9488] hover:bg-[#f0fdfa]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-3" class="w-10 h-10 rounded-xl bg-[#14b8a6] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-teal-300">
-                        <i class="fa-solid fa-chalkboard-user text-white"></i>
+                <!-- Standard 3 Card Tab (Mint Teal with Hover Color-Flip & Elastic Zoom Pop) -->
+                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn group p-3.5 rounded-2xl bg-white border-l-8 border-[#14b8a6] border-t border-r border-b border-teal-200 shadow-md text-left flex items-center gap-3 hover:border-[#0d9488] hover:bg-[#f0fdfa]/40 hover:shadow-lg transition-all duration-300">
+                    <div id="tab-icon-box-3" class="w-10 h-10 rounded-xl bg-[#14b8a6] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-teal-300 group-hover:bg-white group-hover:text-[#14b8a6] group-hover:border-[#14b8a6] transition-all duration-300">
+                        <i class="fa-solid fa-chalkboard-user"></i>
                     </div>
                     <div>
                         <span class="text-[10px] uppercase font-bold text-[#0f766e] tracking-wider block">การจัดประสบการณ์</span>
@@ -144,8 +164,7 @@
                     <h4 class="text-xs md:text-sm font-extrabold text-slate-800 flex items-center gap-2">
                         <i class="fa-solid fa-images text-[#166534]"></i> รูปภาพหลักฐานเชิงประจักษ์แนบเพิ่มเติม
                     </h4>
-                    <!-- 2 columns layout for attached images -->
-                    <div id="modal-images-gallery" class="grid grid-cols-2 gap-3"></div>
+                    <div id="modal-images-gallery" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
                 </div>
             </div>
 
@@ -157,30 +176,30 @@
         </div>
     </div>
 
-    <div id="lightbox-modal" onclick="handleLightboxBackdropClick(event)" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all">
-        <div onclick="event.stopPropagation()" class="relative max-w-5xl w-full flex flex-col items-center justify-center">
+    <div id="lightbox-modal" onclick="handleLightboxBackdropClick(event)" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-all">
+        <div onclick="event.stopPropagation()" class="relative max-w-3xl w-full flex flex-col items-center justify-center">
             <!-- Close Button -->
-            <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-white/80 hover:text-white text-3xl font-bold transition-colors p-2 z-10">
+            <button onclick="closeLightbox()" class="absolute -top-10 right-0 text-white/80 hover:text-white text-3xl font-bold transition-colors p-2 z-10">
                 <i class="fa-solid fa-xmark"></i>
             </button>
 
-            <!-- Image Container -->
-            <div class="relative w-full max-h-[80vh] flex items-center justify-center rounded-2xl overflow-hidden bg-black/40">
-                <img id="lightbox-img" src="" class="max-h-[80vh] max-w-full object-contain rounded-xl shadow-2xl transition-all duration-300">
+            <!-- Image Container (Compact 70vh size) -->
+            <div class="relative w-full max-h-[70vh] flex items-center justify-center rounded-2xl overflow-hidden bg-black/40 border-2 border-white/20 shadow-2xl p-2">
+                <img id="lightbox-img" src="" class="max-h-[70vh] max-w-full object-contain rounded-xl shadow-2xl transition-all duration-300">
                 
                 <!-- Left Navigation Arrow -->
-                <button id="lightbox-prev-btn" onclick="prevLightboxImage()" class="absolute left-3 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center text-xl transition-all border border-white/20 shadow-lg">
+                <button id="lightbox-prev-btn" onclick="prevLightboxImage()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center text-lg transition-all border border-white/20 shadow-lg">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
 
                 <!-- Right Navigation Arrow -->
-                <button id="lightbox-next-btn" onclick="nextLightboxImage()" class="absolute right-3 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 text-white rounded-full flex items-center justify-center text-xl transition-all border border-white/20 shadow-lg">
+                <button id="lightbox-next-btn" onclick="nextLightboxImage()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 hover:bg-black/90 text-white rounded-full flex items-center justify-center text-lg transition-all border border-white/20 shadow-lg">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
 
             <!-- Image Counter Badge -->
-            <div id="lightbox-counter" class="mt-4 px-4 py-1.5 bg-white/20 text-white text-xs md:text-sm font-extrabold rounded-full border border-white/30 backdrop-blur-sm">
+            <div id="lightbox-counter" class="mt-3 px-4 py-1 bg-white/20 text-white text-xs md:text-sm font-extrabold rounded-full border border-white/30 backdrop-blur-sm">
                 1 / 1
             </div>
         </div>
@@ -239,10 +258,33 @@
             if (!url || typeof url !== 'string') return '';
             const trimmed = url.trim();
             if (!trimmed) return '';
-            if (trimmed.startsWith('data:image/')) return trimmed;
+            if (trimmed.startsWith('data:image/') || trimmed.startsWith('blob:')) return trimmed;
             const match = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/id=([a-zA-Z0-9_-]+)/);
             if (match && match[1]) {
                 return `https://lh3.googleusercontent.com/d/${match[1]}`;
+            }
+            return trimmed;
+        }
+
+        function convertYouTubeEmbedUrl(url) {
+            if (!url || typeof url !== 'string') return '';
+            const trimmed = url.trim();
+            if (!trimmed) return '';
+
+            let videoId = "";
+            if (trimmed.includes("youtu.be/")) {
+                videoId = trimmed.split("youtu.be/")[1].split("?")[0].split("&")[0];
+            } else if (trimmed.includes("youtube.com/watch")) {
+                const urlObj = new URL(trimmed);
+                videoId = urlObj.searchParams.get("v");
+            } else if (trimmed.includes("youtube.com/embed/")) {
+                videoId = trimmed.split("youtube.com/embed/")[1].split("?")[0].split("&")[0];
+            } else if (trimmed.includes("youtube.com/shorts/")) {
+                videoId = trimmed.split("youtube.com/shorts/")[1].split("?")[0].split("&")[0];
+            }
+
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0`;
             }
             return trimmed;
         }
@@ -251,6 +293,10 @@
             if (!url || typeof url !== 'string') return '';
             const trimmed = url.trim();
             if (!trimmed) return '';
+
+            if (trimmed.includes("youtube.com") || trimmed.includes("youtu.be")) {
+                return convertYouTubeEmbedUrl(trimmed);
+            }
 
             const match = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/id=([a-zA-Z0-9_-]+)/);
             if (match && match[1]) {
@@ -262,6 +308,12 @@
             }
 
             return trimmed;
+        }
+
+        function isVideoUrl(url) {
+            if (!url || typeof url !== 'string') return false;
+            const trimmed = url.toLowerCase().trim();
+            return trimmed.endsWith('.mp4') || trimmed.endsWith('.webm') || trimmed.endsWith('.mov') || trimmed.startsWith('data:video/') || trimmed.startsWith('blob:');
         }
 
         async function fetchSheetData() {
@@ -431,15 +483,22 @@
                         innerHtml += galleryHtml;
                     }
                 } else if (block.type === 'vtr' && block.videoUrl) {
-                    let embedUrl = block.videoUrl;
-                    if (embedUrl.includes('watch?v=')) {
-                        embedUrl = embedUrl.replace('watch?v=', 'embed/');
+                    let embedUrl = convertYouTubeEmbedUrl(block.videoUrl);
+                    if (isVideoUrl(block.videoUrl)) {
+                        innerHtml += `
+                            <div class="aspect-video w-full rounded-2xl overflow-hidden border border-white/50 bg-black shadow-md flex items-center justify-center">
+                                <video controls class="w-full h-full object-contain">
+                                    <source src="${block.videoUrl}">
+                                </video>
+                            </div>
+                        `;
+                    } else {
+                        innerHtml += `
+                            <div class="aspect-video w-full rounded-2xl overflow-hidden border border-white/50 bg-black shadow-md">
+                                <iframe src="${embedUrl}" class="w-full h-full border-0" allowfullscreen></iframe>
+                            </div>
+                        `;
                     }
-                    innerHtml += `
-                        <div class="aspect-video w-full rounded-2xl overflow-hidden border border-white/50 bg-black shadow-md">
-                            <iframe src="${embedUrl}" class="w-full h-full border-0" allowfullscreen></iframe>
-                        </div>
-                    `;
                 }
 
                 if (block.showBtn && block.btnLabel && block.btnUrl) {
@@ -470,9 +529,9 @@
                 const btn = document.getElementById(`tab-btn-${id}`);
                 const cfg = configs[id];
                 if (id === tabId) {
-                    btn.className = `tab-btn p-3.5 rounded-2xl ${cfg.activeBg} border-l-8 ${cfg.border} border-t border-r border-b shadow-lg text-left flex items-center gap-3 scale-[1.02]`;
+                    btn.className = `tab-btn group p-3.5 rounded-2xl ${cfg.activeBg} border-l-8 ${cfg.border} border-t border-r border-b shadow-lg text-left flex items-center gap-3 transition-all duration-300`;
                 } else {
-                    btn.className = `tab-btn p-3.5 rounded-2xl bg-white border-l-8 ${cfg.border} ${cfg.hoverBorder} border-t border-r border-b border-slate-200 shadow-md text-left flex items-center gap-3 opacity-90 hover:opacity-100 hover:bg-slate-50`;
+                    btn.className = `tab-btn group p-3.5 rounded-2xl bg-white border-l-8 ${cfg.border} ${cfg.hoverBorder} border-t border-r border-b border-slate-200 shadow-md text-left flex items-center gap-3 opacity-90 hover:opacity-100 hover:bg-slate-50 transition-all duration-300`;
                 }
             }
 
@@ -506,7 +565,7 @@
             targetData.forEach((item, topicIndex) => {
                 const uniqueId = `std-${standardId}-${topicIndex}`;
                 const itemDiv = document.createElement('div');
-                itemDiv.className = `bg-white border-l-8 ${cfg.borderLeft} border-t border-r border-b border-slate-200 rounded-3xl overflow-hidden sticker-card mb-3 transition-all duration-300`;
+                itemDiv.className = `bg-white border-l-8 ${cfg.borderLeft} border-t border-r border-b border-slate-200 rounded-3xl overflow-hidden sticker-card mb-3 transition-all duration-300 animate-card-fade accordion-card-hover`;
                 
                 const docs = Array.isArray(item.documents) ? item.documents : [];
                 const docRows = docs.map((doc) => `
@@ -517,7 +576,7 @@
                         </span>
                         
                         <div class="flex items-center gap-2 self-end sm:self-auto flex-shrink-0">
-                            <button onclick="openPdfModal('${standardId}', ${topicIndex})" class="px-3.5 py-1.5 ${cfg.btnBg} text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1.5">
+                            <button onclick="openPdfModal('${standardId}', ${topicIndex})" class="px-3.5 py-1.5 ${cfg.btnBg} text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1.5 hover:shadow-md">
                                 <i class="fa-solid fa-eye"></i> เปิดดูเอกสาร
                             </button>
                         </div>
@@ -594,6 +653,23 @@
                 const docCard = document.createElement('div');
                 docCard.className = "bg-white p-4 rounded-2xl border-2 border-[#84cc16] shadow-sm space-y-3";
 
+                let mediaHtml = "";
+                if (isVideoUrl(doc.url)) {
+                    mediaHtml = `
+                        <div class="w-full h-[50vh] min-h-[350px] rounded-2xl overflow-hidden border border-slate-200 bg-black shadow-inner flex items-center justify-center">
+                            <video controls class="w-full h-full object-contain">
+                                <source src="${doc.url}">
+                            </video>
+                        </div>
+                    `;
+                } else {
+                    mediaHtml = `
+                        <div class="w-full h-[50vh] min-h-[350px] rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner">
+                            <iframe class="w-full h-full border-0" src="${previewUrl || 'about:blank'}"></iframe>
+                        </div>
+                    `;
+                }
+
                 docCard.innerHTML = `
                     <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                         <h4 class="font-bold text-xs md:text-sm text-slate-800 flex items-center gap-2">
@@ -604,9 +680,7 @@
                             <i class="fa-solid fa-up-right-from-square"></i> เปิดลิงก์แยก
                         </a>
                     </div>
-                    <div class="w-full h-[50vh] min-h-[350px] rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner">
-                        <iframe class="w-full h-full border-0" src="${previewUrl || 'about:blank'}"></iframe>
-                    </div>
+                    ${mediaHtml}
                 `;
                 stackContainer.appendChild(docCard);
 
