@@ -11,11 +11,31 @@
         body { font-family: 'Sarabun', sans-serif; background-color: #fcfcf9; }
         .sticker-card { box-shadow: 0 0 0 4px #ffffff, 0 10px 25px rgba(22, 101, 52, 0.08); }
 
-        .tab-btn {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        @keyframes cardFadeIn {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* 10 Pastel Theme Styles */
+        .animate-card-fade {
+            animation: cardFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Elastic Zoom Pop Animation (Style 4: scale 1.03 on hover) */
+        .tab-btn {
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .tab-btn:hover {
+            transform: scale(1.03) !important;
+        }
+
+        .accordion-card-hover {
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .accordion-card-hover:hover {
+            transform: scale(1.03);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+        }
+
         .block-theme-lime { background: linear-gradient(135deg, #f7fee7, #ecfccb); border-color: #84cc16; color: #275214; }
         .block-theme-gold { background: linear-gradient(135deg, #fefce8, #fef9c3); border-color: #f59e0b; color: #713f12; }
         .block-theme-teal { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border-color: #14b8a6; color: #134e4a; }
@@ -48,7 +68,6 @@
         </div>
     </div>
 
-    <!-- Confirm Delete Modal (Z-index z-[10000]) -->
     <div id="confirm-delete-modal" onclick="handleBackdropClick(event, 'confirm-delete-modal')" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-all">
         <div onclick="event.stopPropagation()" class="bg-white rounded-3xl w-full max-w-sm overflow-hidden border-2 border-white sticker-card p-6 text-center space-y-4">
             <div class="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center text-3xl mx-auto border border-rose-100">
@@ -168,10 +187,10 @@
 
         <main class="max-w-4xl mx-auto px-4 py-4">
             <div id="tabs-navigation-container" class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5 border-b border-slate-200/60 pb-4">
-                <!-- Standard 1 Card Tab (Purple) -->
-                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#a855f7] border-t border-r border-b border-purple-200 shadow-md text-left flex items-center gap-2.5 hover:border-[#9333ea] hover:bg-[#faf5ff]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-1" class="w-10 h-10 rounded-xl bg-[#a855f7] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-purple-300">
-                        <i class="fa-solid fa-star text-white"></i>
+                <!-- Standard 1 Card Tab (Purple with Hover Color-Flip & Elastic Zoom Pop) -->
+                <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn group p-3.5 rounded-2xl bg-white border-l-8 border-[#a855f7] border-t border-r border-b border-purple-200 shadow-md text-left flex items-center gap-2.5 hover:border-[#9333ea] hover:bg-[#faf5ff]/40 hover:shadow-lg transition-all duration-300">
+                    <div id="tab-icon-box-1" class="w-10 h-10 rounded-xl bg-[#a855f7] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-purple-300 group-hover:bg-white group-hover:text-[#a855f7] group-hover:border-[#a855f7] transition-all duration-300">
+                        <i class="fa-solid fa-star"></i>
                     </div>
                     <div>
                         <span class="text-[9px] uppercase font-bold text-[#7e22ce] block leading-tight">คุณภาพผู้เรียน</span>
@@ -179,10 +198,10 @@
                     </div>
                 </button>
 
-                <!-- Standard 2 Card Tab (Amber Gold) -->
-                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#f59e0b] border-t border-r border-b border-amber-200 shadow-md text-left flex items-center gap-2.5 hover:border-[#d97706] hover:bg-[#fefce8]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-2" class="w-10 h-10 rounded-xl bg-[#f59e0b] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-amber-300">
-                        <i class="fa-solid fa-folder-open text-white"></i>
+                <!-- Standard 2 Card Tab (Amber Gold with Hover Color-Flip & Elastic Zoom Pop) -->
+                <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn group p-3.5 rounded-2xl bg-white border-l-8 border-[#f59e0b] border-t border-r border-b border-amber-200 shadow-md text-left flex items-center gap-2.5 hover:border-[#d97706] hover:bg-[#fefce8]/40 hover:shadow-lg transition-all duration-300">
+                    <div id="tab-icon-box-2" class="w-10 h-10 rounded-xl bg-[#f59e0b] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-amber-300 group-hover:bg-white group-hover:text-[#f59e0b] group-hover:border-[#f59e0b] transition-all duration-300">
+                        <i class="fa-solid fa-folder-open"></i>
                     </div>
                     <div>
                         <span class="text-[9px] uppercase font-bold text-[#b45309] block leading-tight">การบริหารจัดการ</span>
@@ -190,10 +209,10 @@
                     </div>
                 </button>
 
-                <!-- Standard 3 Card Tab (Mint Teal) -->
-                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#14b8a6] border-t border-r border-b border-teal-200 shadow-md text-left flex items-center gap-2.5 hover:border-[#0d9488] hover:bg-[#f0fdfa]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-3" class="w-10 h-10 rounded-xl bg-[#14b8a6] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-teal-300">
-                        <i class="fa-solid fa-chalkboard-user text-white"></i>
+                <!-- Standard 3 Card Tab (Mint Teal with Hover Color-Flip & Elastic Zoom Pop) -->
+                <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn group p-3.5 rounded-2xl bg-white border-l-8 border-[#14b8a6] border-t border-r border-b border-teal-200 shadow-md text-left flex items-center gap-2.5 hover:border-[#0d9488] hover:bg-[#f0fdfa]/40 hover:shadow-lg transition-all duration-300">
+                    <div id="tab-icon-box-3" class="w-10 h-10 rounded-xl bg-[#14b8a6] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-teal-300 group-hover:bg-white group-hover:text-[#14b8a6] group-hover:border-[#14b8a6] transition-all duration-300">
+                        <i class="fa-solid fa-chalkboard-user"></i>
                     </div>
                     <div>
                         <span class="text-[9px] uppercase font-bold text-[#0f766e] block leading-tight">การจัดประสบการณ์</span>
@@ -201,10 +220,10 @@
                     </div>
                 </button>
 
-                <!-- Builder Card Tab (Rose Pink) -->
-                <button onclick="switchTab(4)" id="tab-btn-4" class="tab-btn p-3.5 rounded-2xl bg-white border-l-8 border-[#ec4899] border-t border-r border-b border-pink-200 shadow-md text-left flex items-center gap-2.5 hover:border-[#be185d] hover:bg-[#fdf2f8]/40 hover:shadow-lg">
-                    <div id="tab-icon-box-4" class="w-10 h-10 rounded-xl bg-[#ec4899] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-pink-300">
-                        <i class="fa-solid fa-wand-magic-sparkles text-white"></i>
+                <!-- Builder Card Tab (Rose Pink with Hover Color-Flip & Elastic Zoom Pop) -->
+                <button onclick="switchTab(4)" id="tab-btn-4" class="tab-btn group p-3.5 rounded-2xl bg-white border-l-8 border-[#ec4899] border-t border-r border-b border-pink-200 shadow-md text-left flex items-center gap-2.5 hover:border-[#be185d] hover:bg-[#fdf2f8]/40 hover:shadow-lg transition-all duration-300">
+                    <div id="tab-icon-box-4" class="w-10 h-10 rounded-xl bg-[#ec4899] text-white flex items-center justify-center text-base flex-shrink-0 shadow-sm border border-pink-300 group-hover:bg-white group-hover:text-[#ec4899] group-hover:border-[#ec4899] transition-all duration-300">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </div>
                     <div>
                         <span class="text-[9px] uppercase font-bold text-[#be185d] block leading-tight">ตกแต่งหน้าเว็บ</span>
@@ -218,7 +237,7 @@
                     <h3 class="font-extrabold text-slate-800 text-xs md:text-sm flex items-center gap-2">
                         <i class="fa-solid fa-list-check text-[#15803d]"></i> รายการประเด็นพิจารณาและหลักฐานเชิงประจักษ์
                     </h3>
-                    <button onclick="openAddTopicModal()" class="px-3.5 py-1.5 bg-[#166534] hover:bg-[#14532d] text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1">
+                    <button onclick="openAddTopicModal()" class="px-3.5 py-1.5 bg-[#166534] hover:bg-[#14532d] text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1 hover:shadow-md">
                         <i class="fa-solid fa-circle-plus"></i> เพิ่มประเด็นพิจารณาใหม่
                     </button>
                 </div>
@@ -269,7 +288,6 @@
                     </div>
                 </div>
 
-                <!-- Welcome Blocks Builder Card -->
                 <div class="bg-white border-l-8 border-[#be185d] border-t border-r border-b border-pink-200 p-5 rounded-3xl sticker-card space-y-3 transition-all duration-300">
                     <div class="flex justify-between items-center border-b border-slate-100 pb-2.5">
                         <div>
@@ -362,7 +380,6 @@
                     <textarea id="block-body" rows="3" class="w-full px-3.5 py-2 text-xs md:text-sm border border-slate-200 rounded-xl font-medium text-slate-800 focus:outline-none" placeholder="กรอกเนื้อหาข้อความต้อนรับ..."></textarea>
                 </div>
 
-                <!-- Multi-image block configuration -->
                 <div id="field-image-container" class="hidden space-y-2.5 p-3 bg-slate-50 rounded-2xl border border-slate-200">
                     <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                         <label class="block text-xs font-bold text-slate-700">🖼️ รูปภาพประกอบ (อัปโหลดหรือแนบ URL เพิ่มได้หลายรูป)</label>
@@ -381,10 +398,14 @@
                     </div>
                 </div>
 
-                <div id="field-vtr-container" class="hidden space-y-2 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                <div id="field-vtr-container" class="hidden space-y-2.5 p-3 bg-slate-50 rounded-2xl border border-slate-200">
                     <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">วางลิงก์ YouTube VTR</label>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">วางลิงก์ YouTube / Google Drive / ไฟล์วิดีโอ (.mp4)</label>
                         <input type="text" id="block-video-url" class="w-full px-3.5 py-2 text-xs border border-slate-200 rounded-xl font-mono" placeholder="https://www.youtube.com/watch?v=...">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">หรือเลือกไฟล์วิดีโอจากเครื่อง</label>
+                        <input type="file" accept="video/mp4,video/webm,video/quicktime" onchange="handleBlockVideoFileUpload(event)" class="w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-pink-50 file:text-pink-600 hover:file:bg-pink-100">
                     </div>
                 </div>
 
@@ -432,11 +453,11 @@
                 <input type="hidden" id="edit-doc-topic-idx">
                 <input type="hidden" id="edit-doc-doc-idx">
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">ชื่อเอกสารหลักฐาน (.pdf, .xlsx, .docx)</label>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">ชื่อเอกสารหลักฐาน (.pdf, .xlsx, .docx, วิดีโอ)</label>
                     <input type="text" id="edit-doc-name" class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-medium" placeholder="เช่น รายงานผลสัมฤทธิ์ทางการเรียน.pdf">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">ลิงก์ Google Drive ของเอกสาร</label>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">ลิงก์ Google Drive / YouTube / ลิงก์ไฟล์วิดีโอ</label>
                     <input type="text" id="edit-doc-url" placeholder="https://drive.google.com/file/d/..." class="w-full px-3.5 py-2 border border-slate-200 rounded-xl text-xs font-mono">
                 </div>
 
@@ -566,10 +587,33 @@
             if (!url || typeof url !== 'string') return '';
             const trimmed = url.trim();
             if (!trimmed) return '';
-            if (trimmed.startsWith('data:image/')) return trimmed;
+            if (trimmed.startsWith('data:image/') || trimmed.startsWith('blob:')) return trimmed;
             const match = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/id=([a-zA-Z0-9_-]+)/);
             if (match && match[1]) {
                 return `https://lh3.googleusercontent.com/d/${match[1]}`;
+            }
+            return trimmed;
+        }
+
+        function convertYouTubeEmbedUrl(url) {
+            if (!url || typeof url !== 'string') return '';
+            const trimmed = url.trim();
+            if (!trimmed) return '';
+
+            let videoId = "";
+            if (trimmed.includes("youtu.be/")) {
+                videoId = trimmed.split("youtu.be/")[1].split("?")[0].split("&")[0];
+            } else if (trimmed.includes("youtube.com/watch")) {
+                const urlObj = new URL(trimmed);
+                videoId = urlObj.searchParams.get("v");
+            } else if (trimmed.includes("youtube.com/embed/")) {
+                videoId = trimmed.split("youtube.com/embed/")[1].split("?")[0].split("&")[0];
+            } else if (trimmed.includes("youtube.com/shorts/")) {
+                videoId = trimmed.split("youtube.com/shorts/")[1].split("?")[0].split("&")[0];
+            }
+
+            if (videoId) {
+                return `https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0`;
             }
             return trimmed;
         }
@@ -733,6 +777,16 @@
                 };
                 reader.readAsDataURL(file);
             });
+        }
+
+        function handleBlockVideoFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('block-video-url').value = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
 
         function addBlockImageFromUrl() {
@@ -1124,9 +1178,9 @@
                 if (!btn) continue;
                 const cfg = configs[id];
                 if (id === tabId) {
-                    btn.className = `tab-btn p-3.5 rounded-2xl ${cfg.activeBg} border-l-8 ${cfg.border} border-t border-r border-b shadow-lg text-left flex items-center gap-2.5 scale-[1.02]`;
+                    btn.className = `tab-btn group p-3.5 rounded-2xl ${cfg.activeBg} border-l-8 ${cfg.border} border-t border-r border-b shadow-lg text-left flex items-center gap-2.5 transition-all duration-300`;
                 } else {
-                    btn.className = `tab-btn p-3.5 rounded-2xl bg-white border-l-8 ${cfg.border} ${cfg.hoverBorder} border-t border-r border-b border-slate-200 shadow-md text-left flex items-center gap-2.5 opacity-90 hover:opacity-100 hover:bg-slate-50`;
+                    btn.className = `tab-btn group p-3.5 rounded-2xl bg-white border-l-8 ${cfg.border} ${cfg.hoverBorder} border-t border-r border-b border-slate-200 shadow-md text-left flex items-center gap-2.5 opacity-90 hover:opacity-100 hover:bg-slate-50 transition-all duration-300`;
                 }
             }
 
@@ -1172,7 +1226,7 @@
             targetData.forEach((item, topicIndex) => {
                 const uniqueId = `std-${standardId}-${topicIndex}`;
                 const itemDiv = document.createElement('div');
-                itemDiv.className = `bg-white border-l-8 ${cfg.borderLeft} border-t border-r border-b border-slate-200 rounded-3xl overflow-hidden sticker-card mb-3 transition-all duration-300`;
+                itemDiv.className = `bg-white border-l-8 ${cfg.borderLeft} border-t border-r border-b border-slate-200 rounded-3xl overflow-hidden sticker-card mb-3 transition-all duration-300 animate-card-fade accordion-card-hover`;
                 
                 const docs = Array.isArray(item.documents) ? item.documents : [];
                 const docRows = docs.map((doc, docIndex) => `
@@ -1200,7 +1254,7 @@
                             <button onclick="openEditTopicModal(${topicIndex})" class="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl transition-all border border-slate-200 shadow-sm">
                                 <i class="fa-solid fa-pen-to-square mr-1"></i> แก้ไขหัวข้อ
                             </button>
-                            <button onclick="openAddDocModal(${topicIndex})" class="px-2.5 py-1 ${cfg.btnBg} text-white text-xs font-bold rounded-xl shadow-sm transition-all">
+                            <button onclick="openAddDocModal(${topicIndex})" class="px-2.5 py-1 ${cfg.btnBg} text-white text-xs font-bold rounded-xl shadow-sm transition-all hover:shadow-md">
                                 <i class="fa-solid fa-plus mr-1"></i> เพิ่มไฟล์
                             </button>
                             <button onclick="confirmDeleteTopicItem(${topicIndex})" class="p-1 text-slate-400 hover:text-rose-500 rounded-xl transition-all">
